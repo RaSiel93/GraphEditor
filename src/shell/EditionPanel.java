@@ -3,6 +3,7 @@ package shell;
 import graph.Edge;
 import graph.Vertex;
 
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -20,24 +21,37 @@ import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 
 
-import listeners.MouseAdapterEdge;
-import listeners.MouseAdapterMotion;
-import listeners.MouseAdapterSelected;
-import listeners.MouseAdapterVertex;
+import listeners.MouseDragObjects;
+import listeners.MouseAdditionEdge;
+import listeners.MouseMotionTempEdge;
+import listeners.MouseTemporarySelection;
+import listeners.MousePressingActivation;
+import listeners.MouseAdditionVertex;
+import listeners.MouseRegionalActivation;
 import main.Controller;
 
 class EditionPanel extends JPanel {
 	public EditionPanel(final Controller c) {
 		controller = c;
 		setBackground(Color.WHITE);
-		selectMouseListener = new MouseAdapterSelected(controller); 
-		vertexMouseListener = new MouseAdapterVertex(controller);
-		edgeMouseListener = new MouseAdapterEdge(controller);
-		motionMouseListener = new MouseAdapterMotion(controller);
+		selectMouseListener = new MousePressingActivation(controller); 
+		vertexMouseListener = new MouseAdditionVertex(controller);
 		
-		addMouseMotionListener(this.motionMouseListener);
-		addMouseListener(this.selectMouseListener);
-		//addMouseListener(this.vertexMouseListner);
+		edgeMouseListener = new MouseAdditionEdge(controller);
+		motionMouseListenerEdge = new MouseMotionTempEdge(controller);
+		
+		moveMouseListener = new MouseTemporarySelection(controller);
+		draggedMouseListener = new MouseDragObjects(controller);
+		
+		mouseBorderSelected = new MouseRegionalActivation(controller);
+		
+		
+		addMouseListener(selectMouseListener);
+		addMouseListener(vertexMouseListener);
+		addMouseMotionListener(moveMouseListener);
+		addMouseMotionListener(draggedMouseListener);
+		addMouseMotionListener(mouseBorderSelected);
+		addMouseMotionListener(motionMouseListenerEdge);
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -69,19 +83,40 @@ class EditionPanel extends JPanel {
 			g2.setStroke(new BasicStroke(4.0f));
 			g2.draw(vertex);
 		}
+		if(controller.checkExistsTempEdge()){
+			g2.setColor(Color.orange);
+			g2.setStroke(new BasicStroke(4.0f));
+			g2.draw(controller.getTempEdge());
+		} 
+		if(controller.isStatusSelection()){
+			g2.setColor(Color.green);
+			g2.setStroke(new BasicStroke(1.0f));
+			g2.draw(controller.getSelectionBorder());
+			//g2.setComposite(new AlphaComposite.SrcOver));
+			AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER,0.3f); 
+			g2.setComposite(ac);
+			g2.setColor(Color.orange);
+			g2.fill(controller.getSelectionBorder());
+		}
 	}
 	public void enableVertexMode() {
 		removeMouseListener(this.edgeMouseListener);
-		addMouseListener(this.vertexMouseListener);
+		controller.removeTempEdge();
 	}
 	public void enableEdgeMode() {
-		removeMouseListener(this.vertexMouseListener);
+		removeMouseListener(this.edgeMouseListener);
+		controller.removeTempEdge();
+		
 		addMouseListener(this.edgeMouseListener);
 	}
 	
 	private Controller controller;
 	private MouseListener vertexMouseListener;
 	private MouseListener edgeMouseListener;
-	private MouseAdapterSelected selectMouseListener;
-	private MouseAdapterMotion motionMouseListener;
+	private MousePressingActivation selectMouseListener;
+	private MouseTemporarySelection moveMouseListener;
+	private MouseDragObjects draggedMouseListener;
+	private MouseMotionTempEdge motionMouseListenerEdge;
+	private MouseRegionalActivation mouseBorderSelected;
+	
 }

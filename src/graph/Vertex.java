@@ -10,15 +10,12 @@ public class Vertex extends Ellipse2D.Double{
 		super(x - SIDELENGTH/2, y - SIDELENGTH/2, SIDELENGTH, SIDELENGTH);
 		status = Color.black;
 	}
-	/*public Point getPoint(){
-		Point p = new Point();
-		return Point(this.getX(), this.getY());
+	public double getCenterX(){
+		return this.getX() + SIDELENGTH/2;
 	}
-	/*public Point getPoint(){
-		Point p = null;
-		p = Point((int)this.getX(), (int)this.getY())
-		return ;
-	}*/
+	public double getCenterY(){
+		return this.getY() + SIDELENGTH/2;
+	}
 	
 	public Color getStatus(){
 		return status;
@@ -32,15 +29,39 @@ public class Vertex extends Ellipse2D.Double{
 	public boolean isActivate(){
 		return active;
 	}
-	public void tempararyEphasisOn(){
+	public void actualOn(){
 		status = status.orange;
 	}
-	public void tempararyEphasisOff(){
+	public void actualOff(){
 		status = status.white;
 	}
 	public void setPositionVertex(double x, double y){
 		setFrame(x, y, SIDELENGTH, SIDELENGTH);
 	}
+	
+	public boolean isVertexInArea(Point p1, Point p2){
+		double x1 = (double)p1.getX();
+		double y1 = (double)p1.getY();
+		double x2 = (double)p2.getX();
+		double y2 = (double)p2.getY();
+		
+		if(x1 > x2){
+			double temp = x1;
+			x1 = x2;
+			x2 = temp;
+		}
+		if(y1 > y2){
+			double temp = y1;
+			y1 = y2;
+			y2 = temp;
+		}
+		
+		if(getCenterX() >= x1 && getCenterX() <= x2 && getCenterY() >= y1 && getCenterY() <= y2){
+			return true;
+		}
+		return false;
+	}
+	
 	
 	private Color status;
 	private boolean active;

@@ -50,9 +50,30 @@ public class Graph {
 	public int countEdge(){
 		return edges.size();
 	}
+	public boolean checkRepeatEdge(Vertex v1, Vertex v2){
+		for(int numEdge = 0; numEdge < countEdge(); numEdge++){
+			if(getEdge(numEdge).getV1() == v1 && getEdge(numEdge).getV2() == v2){
+				return true;
+			}
+		}
+		return false;
+	}
+	public int checkReverseEdge(Vertex v1, Vertex v2){
+		for(int numEdge = 0; numEdge < countEdge(); numEdge++){
+			if(getEdge(numEdge).getV1() == v2 && getEdge(numEdge).getV2() == v1){
+				return numEdge;
+			}
+		}
+		return -1;
+	}
 	public void addEdge(Vertex v1, Vertex v2){
-		edges.add(new Edge(v1, v2));
-		countEdge();
+		if(!checkRepeatEdge(v1, v2)){
+			if(checkReverseEdge(v1, v2) != -1){
+				edges.get(checkReverseEdge(v1, v2)).revers();
+			} else {
+				edges.add(new Edge(v1, v2));
+			}
+		}
 	}
 	public void removeEdge(int numEdge){
 		edges.remove(getEdge(numEdge));
