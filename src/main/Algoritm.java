@@ -58,13 +58,14 @@ public class Algoritm {
 	vertexLabels[graph.findVertex(vertex)][0] = true;
 	vertexLabels[graph.findVertex(vertex)][1] = flag;
 
-	JOptionPane.showMessageDialog(null, "Продолжить...");
+	controller.repaint();
+	// JOptionPane.showMessageDialog(null, "Продолжить...");
 
 	// Thread.sleep(2000);
 
 	for (int numEdge = 0; numEdge < graph.countEdge() && isBipartition; numEdge++) {
 	    Edge edge = graph.getEdge(numEdge);
-	    Vertex vertex1 = edge.getV1(), vertex2 = edge.getV2();
+	    Vertex vertex1 = edge.getVertex1(), vertex2 = edge.getVertex2();
 	    if (vertex1 == vertex) {
 		if (vertexLabels[graph.findVertex(vertex2)][0] == false) {
 		    searchInDepth(vertex2, !flag);
