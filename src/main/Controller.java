@@ -49,7 +49,7 @@ public class Controller {
 	}
 
 	public void startActions() {
-		createGraph();
+		create();
 	}
 
 	public void setView(MainFrame mainFrame) {
@@ -298,11 +298,31 @@ public class Controller {
 	// mainFrame.repaintPanel();
 	// }
 
+	
 	// -------------------------------------
 	// COMMANDS
-	private void createGraph() {
+	public void create() {
 		listGraphs.add(new Graph());
 		int id = listGraphs.getIdLastGraph();
 		mainFrame.addTab(id, "Graph " + id);
+	}
+
+	public void open(int idGraph) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void save(int idGraph) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void close(int idGraph) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void exit() {
+		System.exit(0);
 	}
 }

@@ -6,14 +6,16 @@ import java.awt.event.ActionListener;
 import main.Controller;
 
 public class Save implements ActionListener {
-	public Save(Controller controller) {
-		// TODO Auto-generated constructor stub
+	int idGraph;
+	Controller controller;
+	
+	public Save(int idGraph, Controller controller) {
+		this.idGraph = idGraph;
+		this.controller = controller;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		controller.save(idGraph);
 	}
-
 }
