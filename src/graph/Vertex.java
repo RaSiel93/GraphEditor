@@ -12,12 +12,16 @@ public class Vertex extends Ellipse2D.Double {
 	public Vertex(Vertex v) {
 		super(v.getX() - SIDELENGTH / 2, v.getY() - SIDELENGTH / 2, SIDELENGTH,
 				SIDELENGTH);
-		actualOff();
+//		actualOff();
 	}
 
 	public Vertex(double x, double y) {
 		super(x - SIDELENGTH / 2, y - SIDELENGTH / 2, SIDELENGTH, SIDELENGTH);
-		actualOff();
+//		actualOff();
+	}
+
+	public Vertex(Point point) {
+		super(point.getX() - SIDELENGTH / 2, point.getY() - SIDELENGTH / 2, SIDELENGTH, SIDELENGTH);
 	}
 
 	public void actualOn() {

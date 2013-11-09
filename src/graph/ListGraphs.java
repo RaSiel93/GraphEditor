@@ -7,17 +7,32 @@ import java.util.List;
 public class ListGraphs {
 	private List<Graph> graphs;
 
-	
-	public ListGraphs(){
+	public ListGraphs() {
 		graphs = new ArrayList<Graph>();
 	}
 
 	public Graph get(int id) {
-		for(Graph graph : graphs){
-			if(graph.getId() == id){
+		for (Graph graph : graphs) {
+			if (graph.getId() == id) {
 				return graph;
 			}
 		}
 		return null;
+	}
+
+	public void add(Graph graph) {
+		graphs.add(graph);
+	}
+
+	public void remove(int id) {
+		for (Graph graph : graphs) {
+			if (graph.getId() == id) {
+				graphs.remove(graph);
+			}
+		}
+	}
+	
+	public int getIdLastGraph(){
+		return graphs.get(graphs.size() - 1).getId();
 	}
 }

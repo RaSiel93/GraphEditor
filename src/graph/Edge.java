@@ -27,6 +27,14 @@ public class Edge extends Line2D.Double {
 		refresh();
 	}
 
+	public Edge(Point beginTempEdge, Point endTempEdge) {
+		vertex1 = new Vertex(beginTempEdge);
+		vertex2 = new Vertex(endTempEdge);
+		lenght = 1;
+		activeOn();
+		refresh();
+	}
+
 	public void actualOn() {
 		actual = true;
 	}
@@ -90,6 +98,14 @@ public class Edge extends Line2D.Double {
 	public Vertex getVertex2() {
 		return vertex2;
 	}
+	
+	public void setVertex1(Vertex vertex) {
+		vertex1 = vertex;
+	}
+	
+	public void setVertex2(Vertex vertex) {
+		vertex2 = vertex;
+	}
 
 	public boolean isContentVertexInEdge(Vertex vertex) {
 		return (vertex1 == vertex || vertex2 == vertex);
@@ -133,5 +149,4 @@ public class Edge extends Line2D.Double {
 	public void resize(int value) {
 		lenght = value;
 	}
-
 }

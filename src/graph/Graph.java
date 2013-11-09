@@ -1,6 +1,7 @@
 package graph;
 
 import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,8 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
-	static long mainId = 0;
-	long id;
+	static int mainId = 0;
+	int id;
 	int SELECTION_OFFSET = 8;
 	private List<Vertex> vertexes;
 	private List<Edge> edges;
@@ -20,8 +21,9 @@ public class Graph {
 	private int numberActualVertex;
 	private int numberActualEdge;
 
-	private Vertex beginTempEdge;
-	private Point endTempEdge;
+	private Edge tempararyEdge;
+//	private Vertex beginTempEdge;
+//	private Vertex endTempEdge;
 
 	public Graph() {
 		id = mainId++;
@@ -30,8 +32,10 @@ public class Graph {
 
 		numberActualVertex = -1;
 		numberActualEdge = -1;
-		beginTempEdge = null;
-		endTempEdge = null;
+		
+		tempararyEdge = null;
+//		beginTempEdge = null;
+//		endTempEdge = null;
 	}
 
 	public Graph(Graph graph) {
@@ -45,7 +49,7 @@ public class Graph {
 		}
 	}
 
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -75,19 +79,22 @@ public class Graph {
 	// VERTEX
 	public void addVertex(Vertex vertex) {
 		vertexes.add(vertex);
+		numberActualVertex = vertexes.indexOf(vertex);
+		vertex.activeOn();
+		vertex.actualOn();
 	}
 
 	public Vertex getVertex(int numVertex) {
 		return vertexes.get(numVertex);
 	}
 
-	public void removeVertex(int numVertex) {
+	public void removeVertex(Vertex vertex) {
 		for (Edge edge : edges) {
-			if (edge.isContentVertexInEdge(getVertex(numVertex))) {
+			if (edge.isContentVertexInEdge(vertex)) {
 				edges.remove(edge);
 			}
 		}
-		vertexes.remove(getVertex(numVertex));
+		vertexes.remove(vertex);
 	}
 
 	public int countVertexes() {
@@ -118,8 +125,8 @@ public class Graph {
 		return edges.get(numEdge);
 	}
 
-	public void removeEdge(int numEdge) {
-		edges.remove(getEdge(numEdge));
+	public void removeEdge(Edge edge) {
+		edges.remove(edge);
 	}
 
 	public int countEdge() {
@@ -198,8 +205,41 @@ public class Graph {
 			getEdge(numberActualEdge).actualOff();
 		}
 	}
-	
-	public void selectAllObject() {
+
+	public void activateObject(Point point) {
+		if (findVertex(point) != null) {
+			findVertex(point).activeOn();
+		} else if (findEdge(point) != null) {
+			findEdge(point).activeOn();
+		}
+	}
+
+	public void deactivateObject(Point point) {
+		if (findVertex(point) != null) {
+			findVertex(point).activeOff();
+		} else if (findEdge(point) != null) {
+			findEdge(point).activeOff();
+		}
+	}
+
+	public int countActiveObjects() {
+		int countVertexes = 0;
+		for (Vertex vertex : getVertexes()) {
+			if (vertex.isActivate()) {
+				countVertexes++;
+			}
+		}
+
+		int countEdges = 0;
+		for (Edge edge : getEdges()) {
+			if (edge.isActive()) {
+				countEdges++;
+			}
+		}
+		return countVertexes + countEdges;
+	}
+
+	public void activateAll() {
 		for (Vertex vertex : getVertexes()) {
 			vertex.activeOn();
 		}
@@ -208,12 +248,63 @@ public class Graph {
 		}
 	}
 
-	public void deactivateAllObject() {
+	public void deactivateAll() {
 		for (Vertex vertex : getVertexes()) {
 			vertex.activeOff();
 		}
 		for (Edge edge : edges) {
 			edge.activeOff();
 		}
+	}
+	
+	public void removeSelectedObjects() {
+		for (Vertex vertex : getVertexes()) {
+			if (vertex.isActivate()) {
+				removeVertex(vertex);
+			}
+		}
+		for (Edge edge : getEdges()) {
+			if (edge.isActive()) {
+				removeEdge(edge);
+			}
+		}
+		numberActualVertex = -1;
+		numberActualEdge = -1;
+		removeTempEdge();
+	}
+	
+	public void removeTempEdge() {
+		tempararyEdge = null;
+//		beginTempEdge = null;
+//		endTempEdge = null;
+	}
+	
+	public void setBeginTempEdge(Point point) {
+		if (findVertex(point) != null) {
+			tempararyEdge = new Edge(findVertex(point), new Vertex(point));
+		}
+	}
+
+	public void setEndTempEdge(Point point) {
+		tempararyEdge.setVertex2(new Vertex(point));
+	}
+
+	public boolean checkExistsTempEdge() {
+		if (tempararyEdge != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public Edge getTempEdge() {
+		return tempararyEdge;
+	}
+
+	public boolean checkPossibilityEdge(Point p) {
+		if (findVertex(p) != tempararyEdge.getVertex1()
+				&& findVertex(p) != null) {
+			return true;
+		}
+		return false;
 	}
 }

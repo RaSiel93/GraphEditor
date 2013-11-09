@@ -80,19 +80,19 @@ public class EditionPanel extends JPanel {
 
 	public void enableVertexMode() {
 		removeListeners();
-		controller.removeTempEdge();
+		controller.getGraph(idGraph).removeTempEdge();
 	}
 
 	public void enableEdgeMode() {
 		removeListeners();
 		addMouseListener(edgeMouseListener);
-		controller.removeTempEdge();
+		controller.getGraph(idGraph).removeTempEdge();
 	}
 
 	public void enableEditMode() {
 		removeListeners();
 		addMouseListener(editLabelMouseListener);
-		controller.removeTempEdge();
+		controller.getGraph(idGraph).removeTempEdge();
 	}
 
 	private void removeListeners() {
@@ -180,10 +180,10 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void printTemporaryEdge(Graphics2D g) {
-		if (controller.checkExistsTempEdge()) {
+		if (controller.getGraph(idGraph).checkExistsTempEdge()) {
 			g.setColor(Color.orange);
 			g.setStroke(new BasicStroke(2.0f));
-			g.draw(controller.getTempEdge());
+			g.draw(controller.getGraph(idGraph).getTempEdge());
 		}
 	}
 
