@@ -21,7 +21,7 @@ import listeners.commandListeners.main.Exit;
 import listeners.commandListeners.main.Open;
 import listeners.commandListeners.main.Save;
 import listeners.commandListeners.mode.EnabledEdgeMode;
-import listeners.commandListeners.mode.EnabledEditMode;
+import listeners.commandListeners.mode.EnabledEditLabelMode;
 import listeners.commandListeners.mode.EnabledVertexMode;
 import listeners.eventListeners.WindowEvents;
 import main.Controller;
@@ -65,21 +65,27 @@ public class MainFrame extends JFrame {
 		setTitle("Editor Graph");
 		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		int idGraph = getSelectedIdGraph();
 
 		listeners = new HashMap<String, ActionListener>();
-		listeners.put("VERTEX_MODE", new EnabledVertexMode(controller));
-		listeners.put("EDGE_MODE", new EnabledEdgeMode(controller));
-		listeners.put("EDIT_MODE", new EnabledEditMode(controller));
+		listeners.put("VERTEX_MODE", new EnabledVertexMode(this));
+		listeners.put("EDGE_MODE", new EnabledEdgeMode(this));
+		listeners.put("EDIT_MODE", new EnabledEditLabelMode(this));
 		listeners.put("CREATE", new Create(controller));
-		listeners.put("OPEN", new Open(controller));
-		listeners.put("CLOSE", new Close(controller));
-		listeners.put("SAVE", new Save(controller));
+		listeners.put("OPEN", new Open(idGraph, controller));
+		listeners.put("CLOSE", new Close(idGraph, controller));
+		listeners.put("SAVE", new Save(idGraph, controller));
 		listeners.put("EXIT", new Exit(controller));
-		listeners.put("SELECT_ALL", new SelectAllObjects(controller));
-		listeners.put("REMOVE", new RemoveSelectedObjects(controller));
-		listeners.put("RUN_ALGO", new AlgoritmRun(controller));
-		listeners.put("STEP_ALGO", new AlgoritmStep(controller));
-		listeners.put("STOP_ALGO", new AlgoritmStop(controller));
+		listeners.put("SELECT_ALL", new SelectAllObjects(idGraph, controller));
+		listeners.put("REMOVE", new RemoveSelectedObjects(idGraph, controller));
+//		listeners.put("RUN_ALGO", new AlgoritmRun(controller));
+//		listeners.put("STEP_ALGO", new AlgoritmStep(controller));
+//		listeners.put("STOP_ALGO", new AlgoritmStop(controller));
+	}
+
+	private int getSelectedIdGraph() {
+		return getCurrentPanel().getId();
 	}
 
 	EditionPanel getCurrentPanel() {
@@ -99,7 +105,7 @@ public class MainFrame extends JFrame {
 		getCurrentPanel().enableEdgeMode();
 	}
 
-	public void enableEditNameMode() {
+	public void enableEditLabelMode() {
 		getCurrentPanel().enableEditMode();
 	}
 

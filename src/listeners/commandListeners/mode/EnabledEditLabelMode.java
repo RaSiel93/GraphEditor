@@ -7,15 +7,15 @@ import shell.MainFrame;
 
 import main.Controller;
 
-public class EnabledEdgeMode implements ActionListener {
+public class EnabledEditLabelMode implements ActionListener {
 	MainFrame mainFrame;
 
-	public EnabledEdgeMode(MainFrame mainFrame) {
+	public EnabledEditLabelMode(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		mainFrame.enableEdgeMode();
+		mainFrame.enableEditLabelMode();
 	}
 }

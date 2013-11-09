@@ -57,6 +57,10 @@ public class EditionPanel extends JPanel {
 		addMouseMotionListener(new MouseRegionalActivation(idGraph, controller));
 	}
 
+	public int getId(){
+		return idGraph;
+	}
+	
 	private void resizeEditionPanel() {
 		if (!controller.isStatusSelection() && !controller.isStatusDragged()) {
 			Point maxCoords = controller.getGraph(idGraph).getMaxCoords();
