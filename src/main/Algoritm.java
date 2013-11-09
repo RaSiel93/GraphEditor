@@ -19,8 +19,8 @@ public class Algoritm {
     public boolean runAlgoritm(Graph graph) throws InterruptedException {
 	this.graph = new Graph(graph);
 
-	vertexLabels = new boolean[graph.countVertex()][2];
-	for (int numVert = 0; numVert < graph.countVertex(); numVert++) {
+	vertexLabels = new boolean[graph.countVertexes()][2];
+	for (int numVert = 0; numVert < graph.countVertexes(); numVert++) {
 	    vertexLabels[numVert][0] = false;
 	    vertexLabels[numVert][1] = false;
 	}
@@ -32,8 +32,8 @@ public class Algoritm {
 
     public void checkGraphOnBipartition() throws InterruptedException {
 	isBipartition = true;
-	if (graph.countVertex() != 0) {
-	    for (int numVertex = 0; numVertex < graph.countVertex(); numVertex++) {
+	if (graph.countVertexes() != 0) {
+	    for (int numVertex = 0; numVertex < graph.countVertexes(); numVertex++) {
 		if (vertexLabels[numVertex][0] == false) {
 		    searchInDepth(graph.getVertex(numVertex), false);
 		}
@@ -55,8 +55,8 @@ public class Algoritm {
 	if (!isBipartition)
 	    return;
 
-	vertexLabels[graph.findVertex(vertex)][0] = true;
-	vertexLabels[graph.findVertex(vertex)][1] = flag;
+	vertexLabels[graph.getIndexVertex(vertex)][0] = true;
+	vertexLabels[graph.getIndexVertex(vertex)][1] = flag;
 
 	controller.repaint();
 	// JOptionPane.showMessageDialog(null, "Продолжить...");
@@ -67,18 +67,18 @@ public class Algoritm {
 	    Edge edge = graph.getEdge(numEdge);
 	    Vertex vertex1 = edge.getVertex1(), vertex2 = edge.getVertex2();
 	    if (vertex1 == vertex) {
-		if (vertexLabels[graph.findVertex(vertex2)][0] == false) {
+		if (vertexLabels[graph.getIndexVertex(vertex2)][0] == false) {
 		    searchInDepth(vertex2, !flag);
 		}
-		if (vertexLabels[graph.findVertex(vertex2)][1] == flag) {
+		if (vertexLabels[graph.getIndexVertex(vertex2)][1] == flag) {
 		    isBipartition = false;
 		    return;
 		}
 	    } else if (vertex2 == vertex) {
-		if (vertexLabels[graph.findVertex(vertex1)][0] == false) {
+		if (vertexLabels[graph.getIndexVertex(vertex1)][0] == false) {
 		    searchInDepth(vertex1, !flag);
 		}
-		if (vertexLabels[graph.findVertex(vertex1)][1] == flag) {
+		if (vertexLabels[graph.getIndexVertex(vertex1)][1] == flag) {
 		    isBipartition = false;
 		    return;
 		}

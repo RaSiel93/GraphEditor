@@ -22,21 +22,6 @@ import javax.swing.JOptionPane;
 import shell.MainFrame;
 
 public class Controller {
-	private ActionListener enabledVertexMode;
-	private ActionListener enabledEdgeMode;
-	private ActionListener enabledEditMode;
-	private ActionListener createFile;
-	private ActionListener openFromFile;
-	private ActionListener saveInFile;
-	private ActionListener exitFromProgramm;
-	private ActionListener selectAllObjects;
-	private ActionListener removeSelectedObjects;
-	private ActionListener runAlgo;
-	private ActionListener stepAlgo;
-	private ActionListener breakAlgo;
-
-	private Map<String, ActionListener> listeners;
-
 	private List<Graph> graphs;
 	private int currentGraph;
 	
@@ -60,7 +45,6 @@ public class Controller {
 
 	public Controller() throws NoSuchMethodException,
 			SecurityException {
-		InitializeLesteners();
 
 		this.graphs = new ArrayList<Graph>();
 
@@ -80,109 +64,9 @@ public class Controller {
 		dragged = false;
 		selection = false;
 	}
-
-	private void InitializeLesteners() {
-		enabledVertexMode = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.enableVertexMode();
-			}
-		};
-		enabledEdgeMode = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.enableEdgeMode();
-			}
-		};
-		enabledEditMode = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				mainFrame.enableEditMode();
-			}
-		};
-		createFile = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				createGraph();
-			}
-		};
-		openFromFile = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeTempEdge();
-				try {
-					loadFile();
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		};
-		saveInFile = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeTempEdge();
-				try {
-					saveFile();
-				} catch (ClassNotFoundException e1) {
-					e1.printStackTrace();
-				}
-			}
-		};
-		exitFromProgramm = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
-			}
-		};
-
-		selectAllObjects = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				selectAllObject();
-			}
-		};
-		removeSelectedObjects = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeSelectedObjects();
-			}
-		};
-		runAlgo = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeTempEdge();
-				try {
-					setAlgoritmFlag(true);
-					runAlgoritm();
-					setAlgoritmFlag(false);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		};
-		stepAlgo = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// setAlgoritmFlag(true);
-			}
-		};
-		breakAlgo = new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setAlgoritmFlag(false);
-			}
-		};
-
-		listeners = new HashMap<String, ActionListener>();
-
-		listeners.put("VERTEX_MODE", this.enabledVertexMode);
-		listeners.put("EDGE_MODE", this.enabledEdgeMode);
-		listeners.put("EDIT_MODE", this.enabledEditMode);
-		listeners.put("CREATE", this.createFile);
-		listeners.put("OPEN", this.openFromFile);
-		listeners.put("SAVE", this.saveInFile);
-		listeners.put("EXIT", this.exitFromProgramm);
-		listeners.put("SELECT_ALL", this.selectAllObjects);
-		listeners.put("REMOVE", this.removeSelectedObjects);
-		listeners.put("RUN_ALGO", this.runAlgo);
-		listeners.put("STEP_ALGO", this.stepAlgo);
-		listeners.put("BREAK_ALGO", this.breakAlgo);
-	}
-
+	
 	public void repaint() {
 		mainFrame.paint();
-	}
-
-	public ActionListener getMethod(String method) {
-		return listeners.get(method);
 	}
 
 	public void setView(MainFrame mainFrame) {
@@ -191,7 +75,8 @@ public class Controller {
 	}
 	
 	private Graph getCurrentGraph(){
-		return graphs.get(currentGraph);
+//		return graphs.get(currentGraph);
+		return graphs.get(0);
 	}
 
 	// ----------------------------------------
@@ -228,7 +113,7 @@ public class Controller {
 
 	// ----------------------------------------
 	public int countVertex() {
-		return getCurrentGraph().countVertex();
+		return getCurrentGraph().countVertexes();
 	}
 
 	public Vertex getVertex(int i) {
@@ -245,8 +130,8 @@ public class Controller {
 
 	// ----------------------------------------
 	public void selectActualObject(Point p) {
-		numActualVertex = getCurrentGraph().findVertex(getCurrentGraph().findVertex(p));
-		numActualEdge = getCurrentGraph().findEdge(getCurrentGraph().findEdge(p));
+		numActualVertex = getCurrentGraph().getIndexVertex(getCurrentGraph().findVertex(p));
+		numActualEdge = getCurrentGraph().getIndexEdge(getCurrentGraph().findEdge(p));
 	}
 
 	public void actualOn() {
@@ -288,7 +173,7 @@ public class Controller {
 
 	public int countActiveObjects() {
 		int countObjects = 0;
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			if (getCurrentGraph().getVertex(numVertex).isActivate())
 				countObjects++;
 		}
@@ -333,7 +218,7 @@ public class Controller {
 
 	// ----------------------------------------
 	public void selectAllObject() {
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			getCurrentGraph().getVertex(numVertex).activeOn();
 		}
 		for (int numEdge = 0; numEdge < getCurrentGraph().countEdge(); numEdge++) {
@@ -343,7 +228,7 @@ public class Controller {
 	}
 
 	public void deactivateAllObject() {
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			getCurrentGraph().getVertex(numVertex).activeOff();
 		}
 		for (int numEdge = 0; numEdge < getCurrentGraph().countEdge(); numEdge++) {
@@ -362,7 +247,7 @@ public class Controller {
 	}
 
 	public void renameSelectedVertexes() {
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			if (getCurrentGraph().getVertex(numVertex).isActivate()) {
 				String name = JOptionPane
 						.showInputDialog("Input name");
@@ -403,7 +288,7 @@ public class Controller {
 
 	// ------------------------------------------
 	public void removeSelectedObjects() {
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			if (getCurrentGraph().getVertex(numVertex).isActivate()) {
 				getCurrentGraph().removeVertex(numVertex);
 				numVertex--;
@@ -425,7 +310,7 @@ public class Controller {
 	public void addVertex(Point p) {
 		Vertex vertex = new Vertex(p.getX(), p.getY());
 		getCurrentGraph().addVertex(vertex);
-		numActualVertex = getCurrentGraph().findVertex(vertex);
+		numActualVertex = getCurrentGraph().getIndexVertex(vertex);
 		getCurrentGraph().getVertex(numActualVertex).activeOn();
 		actualOn();
 
@@ -464,7 +349,7 @@ public class Controller {
 	 * temp1 = temp2; temp2 = temp; }
 	 */
 	public void setSelectionObjects() {
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			getCurrentGraph().getVertex(numVertex).activeOff();
 			if (getCurrentGraph().getVertex(numVertex).isVertexInArea(pointSelectionBegin,
 					pointSelectionEnd)) {
@@ -490,7 +375,7 @@ public class Controller {
 		double x = (double) pointDragged.getX() - (double) p.getX();
 		double y = (double) pointDragged.getY() - (double) p.getY();
 
-		for (int numVertex = 0; numVertex < getCurrentGraph().countVertex(); numVertex++) {
+		for (int numVertex = 0; numVertex < getCurrentGraph().countVertexes(); numVertex++) {
 			Vertex vertex = getCurrentGraph().getVertex(numVertex);
 			if (vertex.isActivate()) {
 				getCurrentGraph().getVertex(numVertex).setPositionVertex(vertex.getX() - x,
@@ -572,39 +457,6 @@ public class Controller {
 		return algoritm.getVertexLabels();
 	}
 
-	// ***********===ALGORITM===************
-	/*
-	 * public void checkGraphOnBipartition() throws InterruptedException { //
-	 * boolean isBipartition = true; if (graph.countVertex() == 0) {
-	 * 
-	 * } for (int numVertex = 0; numVertex < graph.countVertex(); numVertex++) {
-	 * if (graph.getVertex(numVertex).getFlag() == -1) {
-	 * searchInDepth(graph.getVertex(numVertex), 0); } } if (isBipartition) {
-	 * JOptionPane.showMessageDialog(null,
-	 * "���� ����������"); } else {
-	 * JOptionPane.showMessageDialog(null,
-	 * "���� �� ����������"); }
-	 * mainFrame.repaint(); reset(); }
-	 * 
-	 * void searchInDepth(Vertex vertex, int flag) throws InterruptedException {
-	 * // if(graph.getVertex(graph.findVertex(vertex)).getFlag() == -1)
-	 * graph.getVertex(graph.findVertex(vertex)).setFlag(flag);
-	 * mainFrame.repaint(); // Thread.sleep(2000); for (int numEdge = 0; numEdge
-	 * < graph.countEdge(); numEdge++) { Edge edge = graph.getEdge(numEdge); if
-	 * (edge.getV1() == vertex) { if (edge.getV2().getFlag() == -1) {
-	 * searchInDepth(edge.getV2(), (flag + 1) % 2); } if (edge.getV2().getFlag()
-	 * == flag) { isBipartition = false; } } if (edge.getV2() == vertex) { if
-	 * (edge.getV1().getFlag() == -1) { searchInDepth(edge.getV1(), (flag + 1) %
-	 * 2); } if (edge.getV1().getFlag() == flag) { isBipartition = false; } } }
-	 * }
-	 * 
-	 * public void reset() { deactivateAllObject(); isBipartition = true; for
-	 * (int numVertex = 0; numVertex < graph.countVertex(); numVertex++) {
-	 * graph.getVertex(numVertex).setFlag(-1); } }
-	 * 
-	 * boolean isBipartition = true;
-	 */
-
 	public void repaintPanel() {
 		mainFrame.repaintPanel();
 	}
@@ -617,5 +469,10 @@ public class Controller {
 		currentGraph = genIndexForNewGraph();
 		this.graphs.add(new Graph());
 		mainFrame.addTab(currentGraph, "Graph " + currentGraph);
+	}
+
+	public void create() {
+		// TODO Auto-generated method stub
+		
 	}
 }

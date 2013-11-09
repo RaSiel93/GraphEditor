@@ -23,15 +23,15 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import listeners.KeyboardHotKeys;
-import listeners.MouseAdditionEdge;
-import listeners.MouseAdditionVertex;
-import listeners.MouseDragObjects;
-import listeners.MouseEdit;
-import listeners.MouseMotionTempEdge;
-import listeners.MousePressingActivation;
-import listeners.MouseRegionalActivation;
-import listeners.MouseTemporarySelection;
+import listeners.behaviorListeners.KeyboardHotKeys;
+import listeners.behaviorListeners.MouseAdditionEdge;
+import listeners.behaviorListeners.MouseAdditionVertex;
+import listeners.behaviorListeners.MouseDragObjects;
+import listeners.behaviorListeners.MouseEdit;
+import listeners.behaviorListeners.MouseMotionTempEdge;
+import listeners.behaviorListeners.MousePressingActivation;
+import listeners.behaviorListeners.MouseRegionalActivation;
+import listeners.behaviorListeners.MouseTemporarySelection;
 import main.Controller;
 
 public class EditionPanel extends JPanel {
