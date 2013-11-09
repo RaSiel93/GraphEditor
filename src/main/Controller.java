@@ -271,10 +271,6 @@ public class Controller {
 	// mainFrame.repaintPanel();
 	// }
 
-	private int getCurrentIdGraph() {
-		return mainFrame.getCurrentIdGraph();
-	}
-
 	// -------------------------------------
 	// COMMANDS
 	public void create() {
@@ -320,13 +316,11 @@ public class Controller {
 	}
 
 	public void removeSelectedObjects() {
-		// TODO Auto-generated method stub
-
+		getCurrentGraph().removeSelectedObjects();
 	}
 
 	public void activateAll() {
-		// TODO Auto-generated method stub
-
+		getCurrentGraph().activateAll();
 	}
 
 	public void removeTempEdge() {

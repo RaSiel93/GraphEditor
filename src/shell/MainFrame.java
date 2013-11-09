@@ -65,8 +65,6 @@ public class MainFrame extends JFrame {
 		setTitle("Editor Graph");
 		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
-		int idGraph = getCurrentIdGraph();
 
 		listeners = new HashMap<String, ActionListener>();
 		listeners.put("VERTEX_MODE", new EnabledVertexMode(this));
