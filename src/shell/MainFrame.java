@@ -36,8 +36,12 @@ public class MainFrame extends JFrame {
 	private JTabbedPane tabbedPane;
 
 	public MainFrame(Controller controller) {
-		initialize();
+		setTitle("Editor Graph");
+		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 		this.controller = controller;
+		listeners = initListeners();
 
 		addWindowListener(new WindowEvents());
 		MenuPanel menuPanel = new MenuPanel(listeners);
@@ -54,19 +58,15 @@ public class MainFrame extends JFrame {
 		Container contentPane = getContentPane();
 		contentPane.add(menuPanel, BorderLayout.NORTH);
 		contentPane.add(buttonPanel, BorderLayout.WEST);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
-	private void initialize() {
-		setTitle("Editor Graph");
-		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-		listeners = new HashMap<String, ActionListener>();
+	private Map<String, ActionListener> initListeners() {
+		
+		Map<String, ActionListener> listeners = new HashMap<String, ActionListener>();
 		listeners.put("VERTEX_MODE", new EnabledVertexMode(this));
 		listeners.put("EDGE_MODE", new EnabledEdgeMode(this));
 		listeners.put("EDIT_MODE", new EnabledEditLabelMode(this));
@@ -80,6 +80,8 @@ public class MainFrame extends JFrame {
 //		listeners.put("RUN_ALGO", new AlgoritmRun(controller));
 //		listeners.put("STEP_ALGO", new AlgoritmStep(controller));
 //		listeners.put("STOP_ALGO", new AlgoritmStop(controller));
+		
+		return listeners;
 	}
 
 	public int getCurrentIdGraph() {
@@ -93,6 +95,11 @@ public class MainFrame extends JFrame {
 
 	public void paint() {
 		tabbedPane.repaint();
+		this.repaint();
+		this.revalidate();
+		tabbedPane.repaint();
+		this.repaint();
+		this.revalidate();
 	}
 
 	public void enableVertexMode() {
@@ -113,7 +120,8 @@ public class MainFrame extends JFrame {
 
 	public void addTab(int id, String header) {
 		tabbedPane.addTab(header, new EditionPanel(id, controller));
-		tabbedPane.setSelectedIndex(tabbedPane.getComponentCount());
+		tabbedPane.setSelectedIndex(tabbedPane.getComponentCount() - 1);
+		paint();
 	}
 
 	public void removeTab() {

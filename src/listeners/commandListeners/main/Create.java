@@ -7,6 +7,7 @@ import main.Controller;
 
 public class Create implements ActionListener {
 	private Controller controller;
+	
 	public Create(Controller controller) {
 		this.controller = controller;
 	}
