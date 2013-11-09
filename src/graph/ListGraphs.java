@@ -28,6 +28,7 @@ public class ListGraphs {
 		for (Graph graph : graphs) {
 			if (graph.getId() == id) {
 				graphs.remove(graph);
+				break;
 			}
 		}
 	}

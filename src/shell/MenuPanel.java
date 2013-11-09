@@ -25,12 +25,16 @@ public class MenuPanel extends JMenuBar {
 		JMenuItem saveFile = new JMenuItem("Сохранить");
 		saveFile.setAccelerator(KeyStroke.getKeyStroke('S', CTRL_DOWN_MASK));
 		saveFile.addActionListener(listeners.get("SAVE"));
+		JMenuItem closeFile = new JMenuItem("Закрыть");
+		closeFile.setAccelerator(KeyStroke.getKeyStroke('W', CTRL_DOWN_MASK));
+		closeFile.addActionListener(listeners.get("CLOSE"));
 		JMenuItem exitItem = new JMenuItem("Выход");
 		exitItem.addActionListener(listeners.get("EXIT"));
 
 		fileMenu.add(newFile);
 		fileMenu.add(loadFile);
 		fileMenu.add(saveFile);
+		fileMenu.add(closeFile);
 		fileMenu.add(exitItem);
 
 		add(fileMenu);

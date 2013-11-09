@@ -49,7 +49,7 @@ public class Controller {
 	}
 
 	public void startActions() {
-		create();
+//		create();
 	}
 
 	public void setView(MainFrame mainFrame) {
