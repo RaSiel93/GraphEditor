@@ -5,24 +5,23 @@ import java.awt.event.MouseMotionListener;
 
 import main.Controller;
 
-
-
 public class MouseMotionTempEdge implements MouseMotionListener {
-    public MouseMotionTempEdge(int idGraph, Controller c) {
-	controller = c;
-    }
+	Controller controller;
 
-    public void mouseDragged(MouseEvent event) {
-	if (controller.checkExistsTempEdge()) {
-	    controller.setEndTempEdge(event.getPoint());
+	public MouseMotionTempEdge(Controller controller) {
+		this.controller = controller;
 	}
-    }
 
-    public void mouseMoved(MouseEvent event) {
-	if (controller.checkExistsTempEdge()) {
-	    controller.setEndTempEdge(event.getPoint());
+	public void mouseDragged(MouseEvent event) {
+		if (controller.getCurrentGraph().checkExistsTempEdge()) {
+			controller.getCurrentGraph().setEndTempEdge(event.getPoint());
+		}
 	}
-    }
 
-    Controller controller;
+	public void mouseMoved(MouseEvent event) {
+		if (controller.getCurrentGraph().checkExistsTempEdge()) {
+			controller.getCurrentGraph().setEndTempEdge(event.getPoint());
+		}
+	}
+
 }

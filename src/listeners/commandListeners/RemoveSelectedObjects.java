@@ -6,15 +6,14 @@ import java.awt.event.ActionListener;
 import main.Controller;
 
 public class RemoveSelectedObjects implements ActionListener {
-
+	Controller controller;
+	
 	public RemoveSelectedObjects(Controller controller) {
-		// TODO Auto-generated constructor stub
+		this.controller = controller;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
+		controller.removeSelectedObjects();
 	}
-
 }

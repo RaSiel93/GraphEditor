@@ -7,33 +7,34 @@ import java.awt.event.MouseEvent;
 import main.Controller;
 
 public class MouseAdditionEdge extends MouseAdapter {
-    public MouseAdditionEdge(int idGraph, Controller c) {
-	controller = c;
-    }
+	Controller controller;
 
-    @Override
-    public void mousePressed(MouseEvent event) {
-	if (event.getModifiers() == InputEvent.BUTTON1_MASK
-		|| event.isControlDown() || event.isShiftDown()) {
-	    if (controller.checkPointIfVertex(event.getPoint())) {
-		if (!controller.checkExistsTempEdge()) {
-		    controller.setBeginTempEdge(event.getPoint());
-		} else {
-		    if (controller.checkPossibilityEdge(event.getPoint())) {
-			controller.addEdge(event.getPoint());
-			controller.removeTempEdge();
-		    }
-		    if (event.isShiftDown()) {
-			controller.setBeginTempEdge(event.getPoint());
-		    }
+	public MouseAdditionEdge(Controller controller) {
+		this.controller = controller;
+	}
+
+	@Override
+	public void mousePressed(MouseEvent event) {
+		if (event.getModifiers() == InputEvent.BUTTON1_MASK
+				|| event.isControlDown() || event.isShiftDown()) {
+			if (controller.checkPointIfVertex(event.getPoint())) {
+				if (!controller.getCurrentGraph().checkExistsTempEdge()) {
+					controller.getCurrentGraph().setBeginTempEdge(event.getPoint());
+				} else {
+					if (controller.getCurrentGraph().checkPossibilityEdge(event.getPoint())) {
+						controller.getCurrentGraph().addEdge(controller.getCurrentGraph().getTempEdge());
+						controller.removeTempEdge();
+					}
+					if (event.isShiftDown()) {
+						controller.getCurrentGraph().setBeginTempEdge(event.getPoint());
+					}
+				}
+			}
 		}
-	    }
+		if (event.getModifiers() == InputEvent.BUTTON3_MASK) {
+			controller.removeTempEdge();
+			controller.getCurrentGraph().deactivateAll();
+		}
 	}
-	if (event.getModifiers() == InputEvent.BUTTON3_MASK) {
-	    controller.removeTempEdge();
-	    controller.deactivateAllObject();
-	}
-    }
 
-    private Controller controller;
 }

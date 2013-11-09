@@ -22,8 +22,9 @@ public class Graph {
 	private int numberActualEdge;
 
 	private Edge tempararyEdge;
-//	private Vertex beginTempEdge;
-//	private Vertex endTempEdge;
+
+	// private Vertex beginTempEdge;
+	// private Vertex endTempEdge;
 
 	public Graph() {
 		id = mainId++;
@@ -32,10 +33,10 @@ public class Graph {
 
 		numberActualVertex = -1;
 		numberActualEdge = -1;
-		
+
 		tempararyEdge = null;
-//		beginTempEdge = null;
-//		endTempEdge = null;
+		// beginTempEdge = null;
+		// endTempEdge = null;
 	}
 
 	public Graph(Graph graph) {
@@ -119,6 +120,10 @@ public class Graph {
 		if (!checkExistEdge(v1, v2)) {
 			edges.add(new Edge(v1, v2));
 		}
+	}
+
+	public void addEdge(Edge edge) {
+		edges.add(edge);
 	}
 
 	public Edge getEdge(int numEdge) {
@@ -206,7 +211,7 @@ public class Graph {
 		}
 	}
 
-	public void activateObject(Point point) {
+	public void activate(Point point) {
 		if (findVertex(point) != null) {
 			findVertex(point).activeOn();
 		} else if (findEdge(point) != null) {
@@ -214,7 +219,7 @@ public class Graph {
 		}
 	}
 
-	public void deactivateObject(Point point) {
+	public void deactivate(Point point) {
 		if (findVertex(point) != null) {
 			findVertex(point).activeOff();
 		} else if (findEdge(point) != null) {
@@ -256,7 +261,7 @@ public class Graph {
 			edge.activeOff();
 		}
 	}
-	
+
 	public void removeSelectedObjects() {
 		for (Vertex vertex : getVertexes()) {
 			if (vertex.isActivate()) {
@@ -272,13 +277,13 @@ public class Graph {
 		numberActualEdge = -1;
 		removeTempEdge();
 	}
-	
+
 	public void removeTempEdge() {
 		tempararyEdge = null;
-//		beginTempEdge = null;
-//		endTempEdge = null;
+		// beginTempEdge = null;
+		// endTempEdge = null;
 	}
-	
+
 	public void setBeginTempEdge(Point point) {
 		if (findVertex(point) != null) {
 			tempararyEdge = new Edge(findVertex(point), new Vertex(point));

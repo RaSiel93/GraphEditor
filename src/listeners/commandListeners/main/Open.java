@@ -6,16 +6,14 @@ import java.awt.event.ActionListener;
 import main.Controller;
 
 public class Open implements ActionListener {
-	int idGraph;
 	Controller controller;
 	
-	public Open(int idGraph, Controller controller) {
-		this.idGraph = idGraph;
+	public Open(Controller controller) {
 		this.controller = controller;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.open(idGraph);
+		controller.open();
 	}
 }

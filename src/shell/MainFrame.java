@@ -66,25 +66,25 @@ public class MainFrame extends JFrame {
 		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
-		int idGraph = getSelectedIdGraph();
+		int idGraph = getCurrentIdGraph();
 
 		listeners = new HashMap<String, ActionListener>();
 		listeners.put("VERTEX_MODE", new EnabledVertexMode(this));
 		listeners.put("EDGE_MODE", new EnabledEdgeMode(this));
 		listeners.put("EDIT_MODE", new EnabledEditLabelMode(this));
 		listeners.put("CREATE", new Create(controller));
-		listeners.put("OPEN", new Open(idGraph, controller));
-		listeners.put("CLOSE", new Close(idGraph, controller));
-		listeners.put("SAVE", new Save(idGraph, controller));
+		listeners.put("OPEN", new Open(controller));
+		listeners.put("CLOSE", new Close(controller));
+		listeners.put("SAVE", new Save(controller));
 		listeners.put("EXIT", new Exit(controller));
-		listeners.put("SELECT_ALL", new SelectAllObjects(idGraph, controller));
-		listeners.put("REMOVE", new RemoveSelectedObjects(idGraph, controller));
+		listeners.put("SELECT_ALL", new SelectAllObjects(controller));
+		listeners.put("REMOVE", new RemoveSelectedObjects(controller));
 //		listeners.put("RUN_ALGO", new AlgoritmRun(controller));
 //		listeners.put("STEP_ALGO", new AlgoritmStep(controller));
 //		listeners.put("STOP_ALGO", new AlgoritmStop(controller));
 	}
 
-	private int getSelectedIdGraph() {
+	public int getCurrentIdGraph() {
 		return getCurrentPanel().getId();
 	}
 

@@ -6,17 +6,14 @@ import java.awt.event.ActionListener;
 import main.Controller;
 
 public class Close implements ActionListener {
-	int idGraph;
 	Controller controller;
 	
-	public Close(int idGraph, Controller controller) {
-		this.idGraph = idGraph;
+	public Close(Controller controller) {
 		this.controller = controller;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.close(idGraph);
+		controller.close();
 	}
-
 }

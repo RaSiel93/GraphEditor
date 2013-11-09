@@ -60,8 +60,8 @@ public class Controller {
 		mainFrame.paint();
 	}
 
-	public Graph getGraph(int id) {
-		return listGraphs.get(id);
+	public Graph getCurrentGraph() {
+		return listGraphs.get(mainFrame.getCurrentIdGraph());
 	}
 
 	// ----------------------------------------
@@ -99,30 +99,30 @@ public class Controller {
 	// }
 	// ----------------------------------------
 	// ----------------------------------------
-	public boolean checkPointIfEmpty(int idGraph, Point point) {
-		if (getGraph(idGraph).findVertex(point) == null
-				&& getGraph(idGraph).findEdge(point) == null) {
+	public boolean checkPointIfEmpty(Point point) {
+		if (getCurrentGraph().findVertex(point) == null
+				&& getCurrentGraph().findEdge(point) == null) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean checkPointIfVertex(int idGraph, Point point) {
-		if (getGraph(idGraph).findVertex(point) != null) {
+	public boolean checkPointIfVertex(Point point) {
+		if (getCurrentGraph().findVertex(point) != null) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean checkPointIfEdge(int idGraph, Point point) {
-		if (getGraph(idGraph).findEdge(point) != null) {
+	public boolean checkPointIfEdge(Point point) {
+		if (getCurrentGraph().findEdge(point) != null) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean checkIfActive(int idGraph, Point point) {
-		Graph graph = getGraph(idGraph);
+	public boolean checkIfActive(Point point) {
+		Graph graph = getCurrentGraph();
 		if (graph.findVertex(point) != null) {
 			if (graph.findVertex(point).isActivate()) {
 				return true;
@@ -137,15 +137,15 @@ public class Controller {
 	}
 
 	// ------------------------------------------
-	public void renameVertex(int idGraph, Point point) {
+	public void renameVertex(Point point) {
 		String name = JOptionPane.showInputDialog("Input name");
 		if (name != null) {
-			getGraph(idGraph).findVertex(point).setName(name);
+			getCurrentGraph().findVertex(point).setName(name);
 		}
 	}
 
-	public void renameSelectedVertexes(int idGraph) {
-		for (Vertex vertex : getGraph(idGraph).getVertexes()) {
+	public void renameSelectedVertexes() {
+		for (Vertex vertex : getCurrentGraph().getVertexes()) {
 			if (vertex.isActivate()) {
 				String name = JOptionPane.showInputDialog("Input name");
 				if (name != null) {
@@ -155,20 +155,20 @@ public class Controller {
 		}
 	}
 
-	public void resizeEdge(int idGraph, Point point) {
+	public void resizeEdge(Point point) {
 		String lenght = JOptionPane.showInputDialog("Input size");
 		try {
 			int size = Integer.parseInt(lenght);
 			if (checkSize(size)) {
-				getGraph(idGraph).findEdge(point).resize(size);
+				getCurrentGraph().findEdge(point).resize(size);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void resizeSelectedEdges(int idGraph) {
-		for (Edge edge : getGraph(idGraph).getEdges()) {
+	public void resizeSelectedEdges() {
+		for (Edge edge : getCurrentGraph().getEdges()) {
 			if (edge.isActive()) {
 				String lenght = JOptionPane.showInputDialog("Input size");
 				try {
@@ -191,9 +191,9 @@ public class Controller {
 	}
 
 	// ----------------------------------------
-	public void addVertex(int idGraph, Point p) {
+	public void addVertex(Point p) {
 		Vertex vertex = new Vertex(p.getX(), p.getY());
-		getGraph(idGraph).addVertex(vertex);
+		getCurrentGraph().addVertex(vertex);
 		repaint();
 	}
 
@@ -224,15 +224,14 @@ public class Controller {
 		return new Rectangle2D.Double(x1, y1, x2 - x1, y2 - y1);
 	}
 
-	public void setSelectionObjects(int idGraph, Point pointSelectionBegin,
-			Point pointSelectionEnd) {
-		for (Vertex vertex : getGraph(idGraph).getVertexes()) {
+	public void setSelectionObjects() {
+		for (Vertex vertex : getCurrentGraph().getVertexes()) {
 			vertex.activeOff();
 			if (vertex.isVertexInArea(pointSelectionBegin, pointSelectionEnd)) {
 				vertex.activeOn();
 			}
 		}
-		for (Edge edge : getGraph(idGraph).getEdges()) {
+		for (Edge edge : getCurrentGraph().getEdges()) {
 			edge.activeOff();
 			if (edge.isEdgeInArea(pointSelectionBegin, pointSelectionEnd)) {
 				edge.activeOn();
@@ -245,11 +244,11 @@ public class Controller {
 		pointDragged = point;
 	}
 
-	public void dragObjects(int idGraph, Point point) {
+	public void dragObjects(Point point) {
 		double x = (double) pointDragged.getX() - (double) point.getX();
 		double y = (double) pointDragged.getY() - (double) point.getY();
 
-		for (Vertex vertex : getGraph(idGraph).getVertexes()) {
+		for (Vertex vertex : getCurrentGraph().getVertexes()) {
 			if (vertex.isActivate()) {
 				vertex.setPositionVertex(vertex.getX() - x, vertex.getY() - y);
 			}
@@ -259,32 +258,6 @@ public class Controller {
 	}
 
 	// -------------------------------------
-	public void loadFile(int idGraph) {
-		JFileChooser fileopen = new JFileChooser();
-		fileopen.setCurrentDirectory(new File(".\\save"));
-		if (fileopen.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			try {
-				getGraph(idGraph).loadFile(
-						fileopen.getSelectedFile().getAbsolutePath());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		repaint();
-	}
-
-	public void saveFile(int idGraph) {
-		JFileChooser fileopen = new JFileChooser();
-		fileopen.setCurrentDirectory(new File(".\\save"));
-		if (fileopen.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-			try {
-				getGraph(idGraph).saveFile(
-						fileopen.getSelectedFile().getAbsolutePath());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-	}
 
 	// public void runAlgoritm() throws InterruptedException {
 	// algoritm.runAlgoritm(getGraph());
@@ -298,7 +271,10 @@ public class Controller {
 	// mainFrame.repaintPanel();
 	// }
 
-	
+	private int getCurrentIdGraph() {
+		return mainFrame.getCurrentIdGraph();
+	}
+
 	// -------------------------------------
 	// COMMANDS
 	public void create() {
@@ -307,22 +283,53 @@ public class Controller {
 		mainFrame.addTab(id, "Graph " + id);
 	}
 
-	public void open(int idGraph) {
-		// TODO Auto-generated method stub
-		
+	public void open() {
+		JFileChooser fileopen = new JFileChooser();
+		fileopen.setCurrentDirectory(new File(".\\save"));
+		if (fileopen.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			try {
+				getCurrentGraph().loadFile(
+						fileopen.getSelectedFile().getAbsolutePath());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		repaint();
 	}
 
-	public void save(int idGraph) {
-		// TODO Auto-generated method stub
-		
+	public void save() {
+		JFileChooser fileopen = new JFileChooser();
+		fileopen.setCurrentDirectory(new File(".\\save"));
+		if (fileopen.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+			try {
+				getCurrentGraph().saveFile(
+						fileopen.getSelectedFile().getAbsolutePath());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
-	public void close(int idGraph) {
-		// TODO Auto-generated method stub
-		
+	public void close() {
+		listGraphs.remove(mainFrame.getCurrentIdGraph());
+		mainFrame.removeTab();
 	}
 
 	public void exit() {
 		System.exit(0);
+	}
+
+	public void removeSelectedObjects() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void activateAll() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void removeTempEdge() {
+		getCurrentGraph().removeTempEdge();
 	}
 }

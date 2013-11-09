@@ -6,15 +6,17 @@ import java.awt.event.KeyEvent;
 import main.Controller;
 
 public class KeyboardHotKeys extends KeyAdapter {
-	public KeyboardHotKeys(int idGraph, Controller c) {
-		controller = c;
+	Controller controller;	
+	
+	public KeyboardHotKeys(Controller controller) {
+		this.controller = controller;
 	}
 
 	@Override
 	public void keyPressed(KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			controller.deactivateAllObject();
-			if (controller.checkExistsTempEdge())
+			controller.getCurrentGraph().deactivateAll();
+			if (controller.getCurrentGraph().checkExistsTempEdge())
 				controller.removeTempEdge();
 		}
 		if (!controller.isStatusDragged() && !controller.isStatusSelection()
@@ -27,11 +29,7 @@ public class KeyboardHotKeys extends KeyAdapter {
 				controller.activateAll();
 			}
 			if (event.getKeyCode() == KeyEvent.VK_S && event.isControlDown()) {
-				try {
-					controller.saveFile();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				}
+				controller.save();
 			}
 		}
 		if (!controller.isStatusDragged() && !controller.isStatusSelection()
@@ -42,6 +40,4 @@ public class KeyboardHotKeys extends KeyAdapter {
 			}
 		}
 	}
-
-	private Controller controller;
 }

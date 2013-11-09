@@ -6,26 +6,25 @@ import java.awt.event.MouseEvent;
 
 import main.Controller;
 
-
-
 public class MouseAdditionVertex extends MouseAdapter {
-    public MouseAdditionVertex(int idGraph, Controller c) {
-	controller = c;
-    }
-
-    @Override
-    public void mousePressed(MouseEvent event) {
-	if (event.getModifiers() == InputEvent.BUTTON1_MASK
-		|| event.isControlDown() || event.isShiftDown()) {
-	    if (event.getClickCount() == 2 || event.isShiftDown()) {
-		if (controller.checkPointIfEmpty(event.getPoint())) {
-		    controller.addVertex(event.getPoint());
-		    // controller.activateObject(event.getPoint());
-		    // controller.setMotion(true);
-		}
-	    }
+	Controller controller;
+	
+	public MouseAdditionVertex(Controller controller) {
+		this.controller = controller;
 	}
-    }
 
-    Controller controller;
+	@Override
+	public void mousePressed(MouseEvent event) {
+		if (event.getModifiers() == InputEvent.BUTTON1_MASK
+				|| event.isControlDown() || event.isShiftDown()) {
+			if (event.getClickCount() == 2 || event.isShiftDown()) {
+				if (controller.checkPointIfEmpty(event.getPoint())) {
+					controller.addVertex(event.getPoint());
+					// controller.activateObject(event.getPoint());
+					// controller.setMotion(true);
+				}
+			}
+		}
+	}
+
 }

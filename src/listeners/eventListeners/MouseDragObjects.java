@@ -5,32 +5,30 @@ import java.awt.event.MouseMotionListener;
 
 import main.Controller;
 
-
-
 public class MouseDragObjects implements MouseMotionListener {
-    public MouseDragObjects(int idGraph, Controller c) {
-	controller = c;
-    }
-
-    public void mouseDragged(MouseEvent event) {
-	if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()
-		|| event.isShiftDown()) {
-	    if (!controller.checkPointIfEmpty(event.getPoint())
-		    && !controller.isStatusSelection()) {
-		controller.setStatusDragged(true);
-	    }
-	    if (controller.isStatusDragged()) {
-		controller.dragObjects(event.getPoint());
-		if (controller.checkExistsTempEdge()) {
-		    controller.setEndTempEdge(event.getPoint());
-		}
-	    }
+	Controller controller;
+	
+	public MouseDragObjects(Controller controller) {
+		this.controller = controller;
 	}
-    }
 
-    public void mouseMoved(MouseEvent event) {
-	controller.setPointDragged(event.getPoint());
-    }
+	public void mouseDragged(MouseEvent event) {
+		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()
+				|| event.isShiftDown()) {
+			if (!controller.checkPointIfEmpty(event.getPoint())
+					&& !controller.isStatusSelection()) {
+				controller.setStatusDragged(true);
+			}
+			if (controller.isStatusDragged()) {
+				controller.dragObjects(event.getPoint());
+				if (controller.getCurrentGraph().checkExistsTempEdge()) {
+					controller.getCurrentGraph().setEndTempEdge(event.getPoint());
+				}
+			}
+		}
+	}
 
-    Controller controller;
+	public void mouseMoved(MouseEvent event) {
+		controller.setPointDragged(event.getPoint());
+	}
 }

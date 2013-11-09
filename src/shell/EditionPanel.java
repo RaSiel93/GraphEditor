@@ -45,16 +45,16 @@ public class EditionPanel extends JPanel {
 		this.idGraph = idGraph;
 		this.controller = controller;
 
-		this.vertexMouseListener = new MouseAdditionVertex(idGraph, controller);
-		this.edgeMouseListener = new MouseAdditionEdge(idGraph, controller);
-		this.editLabelMouseListener = new MouseEditLabel(idGraph, controller);
+		this.vertexMouseListener = new MouseAdditionVertex(controller);
+		this.edgeMouseListener = new MouseAdditionEdge(controller);
+		this.editLabelMouseListener = new MouseEditLabel(controller);
 
-		addKeyListener(new KeyboardHotKeys(idGraph, controller));
-		addMouseListener(new MousePressingActivation(idGraph, controller));
-		addMouseMotionListener(new MouseDragObjects(idGraph, controller));
-		addMouseMotionListener(new MouseMotionTempEdge(idGraph, controller));
-		addMouseMotionListener(new MouseTemporarySelection(idGraph, controller));
-		addMouseMotionListener(new MouseRegionalActivation(idGraph, controller));
+		addKeyListener(new KeyboardHotKeys(controller));
+		addMouseListener(new MousePressingActivation(controller));
+		addMouseMotionListener(new MouseDragObjects(controller));
+		addMouseMotionListener(new MouseMotionTempEdge(controller));
+		addMouseMotionListener(new MouseTemporarySelection(controller));
+		addMouseMotionListener(new MouseRegionalActivation(controller));
 	}
 
 	public int getId(){
@@ -63,7 +63,7 @@ public class EditionPanel extends JPanel {
 	
 	private void resizeEditionPanel() {
 		if (!controller.isStatusSelection() && !controller.isStatusDragged()) {
-			Point maxCoords = controller.getGraph(idGraph).getMaxCoords();
+			Point maxCoords = controller.getCurrentGraph().getMaxCoords();
 			setPreferredSize(new Dimension((int) maxCoords.getX(),
 					(int) maxCoords.getY()));
 			revalidate();
@@ -84,19 +84,19 @@ public class EditionPanel extends JPanel {
 
 	public void enableVertexMode() {
 		removeListeners();
-		controller.getGraph(idGraph).removeTempEdge();
+		controller.getCurrentGraph().removeTempEdge();
 	}
 
 	public void enableEdgeMode() {
 		removeListeners();
 		addMouseListener(edgeMouseListener);
-		controller.getGraph(idGraph).removeTempEdge();
+		controller.getCurrentGraph().removeTempEdge();
 	}
 
 	public void enableEditMode() {
 		removeListeners();
 		addMouseListener(editLabelMouseListener);
-		controller.getGraph(idGraph).removeTempEdge();
+		controller.getCurrentGraph().removeTempEdge();
 	}
 
 	private void removeListeners() {
@@ -106,7 +106,7 @@ public class EditionPanel extends JPanel {
 	}
 	
 	private void printEdge(Graphics2D g) {
-		for (Edge edge : controller.getGraph(idGraph).getEdges()) {
+		for (Edge edge : controller.getCurrentGraph().getEdges()) {
 			edge.refresh();
 			if (edge.isActual()) {
 				g.setColor(Color.orange);
@@ -161,7 +161,7 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void printVertex(Graphics2D g) {
-		for (Vertex vertex : controller.getGraph(idGraph).getVertexes()) {
+		for (Vertex vertex : controller.getCurrentGraph().getVertexes()) {
 			if (vertex.isActual()) {
 				g.setColor(Color.orange);
 			} else if (vertex.isActivate()) {
@@ -184,10 +184,10 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void printTemporaryEdge(Graphics2D g) {
-		if (controller.getGraph(idGraph).checkExistsTempEdge()) {
+		if (controller.getCurrentGraph().checkExistsTempEdge()) {
 			g.setColor(Color.orange);
 			g.setStroke(new BasicStroke(2.0f));
-			g.draw(controller.getGraph(idGraph).getTempEdge());
+			g.draw(controller.getCurrentGraph().getTempEdge());
 		}
 	}
 
