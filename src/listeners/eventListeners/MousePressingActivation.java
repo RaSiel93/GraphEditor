@@ -8,7 +8,7 @@ import main.Controller;
 
 
 public class MousePressingActivation extends MouseAdapter {
-    public MousePressingActivation(Controller c) {
+    public MousePressingActivation(int idGraph, Controller c) {
 	controller = c;
     }
 

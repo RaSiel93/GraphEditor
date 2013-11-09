@@ -45,16 +45,16 @@ public class EditionPanel extends JPanel {
 		this.idGraph = idGraph;
 		this.controller = controller;
 
-		this.vertexMouseListener = new MouseAdditionVertex(controller);
-		this.edgeMouseListener = new MouseAdditionEdge(controller);
-		this.editLabelMouseListener = new MouseEditLabel(controller);
+		this.vertexMouseListener = new MouseAdditionVertex(idGraph, controller);
+		this.edgeMouseListener = new MouseAdditionEdge(idGraph, controller);
+		this.editLabelMouseListener = new MouseEditLabel(idGraph, controller);
 
-		addKeyListener(new KeyboardHotKeys(controller));
-		addMouseListener(new MousePressingActivation(controller));
-		addMouseMotionListener(new MouseDragObjects(controller));
-		addMouseMotionListener(new MouseMotionTempEdge(controller));
-		addMouseMotionListener(new MouseTemporarySelection(controller));
-		addMouseMotionListener(new MouseRegionalActivation(controller));
+		addKeyListener(new KeyboardHotKeys(idGraph, controller));
+		addMouseListener(new MousePressingActivation(idGraph, controller));
+		addMouseMotionListener(new MouseDragObjects(idGraph, controller));
+		addMouseMotionListener(new MouseMotionTempEdge(idGraph, controller));
+		addMouseMotionListener(new MouseTemporarySelection(idGraph, controller));
+		addMouseMotionListener(new MouseRegionalActivation(idGraph, controller));
 	}
 
 	private void resizeEditionPanel() {

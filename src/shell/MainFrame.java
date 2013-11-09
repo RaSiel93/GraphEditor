@@ -1,12 +1,9 @@
 package shell;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -32,34 +29,34 @@ import main.Controller;
 public class MainFrame extends JFrame {
 	private static final int DEFAUT_WIDTH = 800;
 	private static final int DEFAUT_HEIGHT = 600;
+
 	private Controller controller;
 	private Map<String, ActionListener> listeners;
+
 	private JTabbedPane tabbedPane;
 
 	public MainFrame(Controller controller) {
 		initialize();
 		this.controller = controller;
-		
-		addWindowListener(new WindowEvents());
-//		MenuPanel menuPanel = new MenuPanel(listeners);
-//		ButtonPanel buttonPanel = new ButtonPanel(listeners);
 
-		Container contentPane = getContentPane();
+		addWindowListener(new WindowEvents());
+		MenuPanel menuPanel = new MenuPanel(listeners);
+		ButtonPanel buttonPanel = new ButtonPanel(listeners);
 
 		this.tabbedPane = new JTabbedPane();
-
-//		contentPane.add(menuPanel, BorderLayout.NORTH);
-//		contentPane.add(buttonPanel, BorderLayout.WEST);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
-
 		JScrollPane scrollPane = new JScrollPane(tabbedPane);
 		scrollPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setAutoscrolls(true);
+
+		Container contentPane = getContentPane();
+		contentPane.add(menuPanel, BorderLayout.NORTH);
+		contentPane.add(buttonPanel, BorderLayout.WEST);
+		contentPane.add(tabbedPane, BorderLayout.CENTER);
 		contentPane.add(scrollPane, BorderLayout.CENTER);
-		
+
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
@@ -68,7 +65,7 @@ public class MainFrame extends JFrame {
 		setTitle("Editor Graph");
 		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+
 		listeners = new HashMap<String, ActionListener>();
 		listeners.put("VERTEX_MODE", new EnabledVertexMode(controller));
 		listeners.put("EDGE_MODE", new EnabledEdgeMode(controller));
@@ -82,17 +79,16 @@ public class MainFrame extends JFrame {
 		listeners.put("REMOVE", new RemoveSelectedObjects(controller));
 		listeners.put("RUN_ALGO", new AlgoritmRun(controller));
 		listeners.put("STEP_ALGO", new AlgoritmStep(controller));
-		listeners.put("BREAK_ALGO", new AlgoritmStop(controller));
+		listeners.put("STOP_ALGO", new AlgoritmStop(controller));
 	}
 
 	EditionPanel getCurrentPanel() {
-		int n = tabbedPane.getSelectedIndex();
-		EditionPanel e = (EditionPanel) tabbedPane.getComponent(0);
-		return e;
+		return (EditionPanel) tabbedPane.getComponent(tabbedPane
+				.getSelectedIndex());
 	}
 
-	public void paint() { // editionPanel.update(getGraphics()); //
-		tabbedPane.repaint();// paintComponent(getGraphics());
+	public void paint() {
+		tabbedPane.repaint();
 	}
 
 	public void enableVertexMode() {
@@ -103,7 +99,7 @@ public class MainFrame extends JFrame {
 		getCurrentPanel().enableEdgeMode();
 	}
 
-	public void enableEditMode() {
+	public void enableEditNameMode() {
 		getCurrentPanel().enableEditMode();
 	}
 
@@ -111,9 +107,9 @@ public class MainFrame extends JFrame {
 		getCurrentPanel().repaint();
 	}
 
-	public void addTab(int index, String header) {
-		tabbedPane.addTab(header, new EditionPanel(controller));
-		tabbedPane.setSelectedIndex(index);
+	public void addTab(int id, String header) {
+		tabbedPane.addTab(header, new EditionPanel(id, controller));
+		tabbedPane.setSelectedIndex(tabbedPane.getComponentCount());
 	}
 
 	public void removeTab() {

@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import main.Controller;
 
 public class MouseAdditionEdge extends MouseAdapter {
-    public MouseAdditionEdge(Controller c) {
+    public MouseAdditionEdge(int idGraph, Controller c) {
 	controller = c;
     }
 

@@ -8,7 +8,7 @@ import main.Controller;
 
 
 public class MouseDragObjects implements MouseMotionListener {
-    public MouseDragObjects(Controller c) {
+    public MouseDragObjects(int idGraph, Controller c) {
 	controller = c;
     }
 

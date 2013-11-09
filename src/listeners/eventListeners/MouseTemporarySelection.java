@@ -5,27 +5,28 @@ import java.awt.event.MouseMotionListener;
 
 import main.Controller;
 
-
-
 public class MouseTemporarySelection implements MouseMotionListener {
-    public MouseTemporarySelection(Controller c) {
-	controller = c;
-    }
+	int idGraph;
+	Controller controller;
 
-    public void mouseDragged(MouseEvent event) {
-    }
-
-    public void mouseMoved(MouseEvent event) {
-	if (event.getModifiers() != event.BUTTON1_MASK) {
-	    if (!controller.checkPointIfEmpty(event.getPoint())) {
-		controller.actualOff();
-		controller.selectActualObject(event.getPoint());
-		controller.actualOn();
-	    } else {
-		controller.actualOff();
-	    }
+	public MouseTemporarySelection(int idGraph, Controller controller) {
+		this.idGraph = idGraph;
+		this.controller = controller;
 	}
-    }
 
-    Controller controller;
+	public void mouseDragged(MouseEvent event) {
+	}
+
+	public void mouseMoved(MouseEvent event) {
+		if (event.getModifiers() != event.BUTTON1_MASK) {
+			if (!controller.checkPointIfEmpty(event.getPoint())) {
+				controller.getGraph(idGraph).actualOff();
+				controller.getGraph(idGraph).selectActualObject(
+						event.getPoint());
+				controller.getGraph(idGraph).actualOn();
+			} else {
+				controller.getGraph(idGraph).actualOff();
+			}
+		}
+	}
 }

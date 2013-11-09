@@ -8,7 +8,7 @@ import main.Controller;
 
 
 public class MouseMotionTempEdge implements MouseMotionListener {
-    public MouseMotionTempEdge(Controller c) {
+    public MouseMotionTempEdge(int idGraph, Controller c) {
 	controller = c;
     }
 

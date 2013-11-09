@@ -8,7 +8,7 @@ import main.Controller;
 
 
 public class MouseRegionalActivation implements MouseMotionListener {
-    public MouseRegionalActivation(Controller c) {
+    public MouseRegionalActivation(int idGraph, Controller c) {
 	controller = c;
     }
 

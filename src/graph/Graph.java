@@ -17,10 +17,21 @@ public class Graph {
 	private List<Vertex> vertexes;
 	private List<Edge> edges;
 
+	private int numberActualVertex;
+	private int numberActualEdge;
+
+	private Vertex beginTempEdge;
+	private Point endTempEdge;
+
 	public Graph() {
 		id = mainId++;
 		vertexes = new ArrayList<Vertex>();
 		edges = new ArrayList<Edge>();
+
+		numberActualVertex = -1;
+		numberActualEdge = -1;
+		beginTempEdge = null;
+		endTempEdge = null;
 	}
 
 	public Graph(Graph graph) {
@@ -38,6 +49,14 @@ public class Graph {
 		return id;
 	}
 
+	public List<Vertex> getVertexes() {
+		return vertexes;
+	}
+
+	public List<Edge> getEdges() {
+		return edges;
+	}
+
 	public Point getMaxCoords() {
 		double maxCoordX = 0;
 		double maxCoordY = 0;
@@ -52,6 +71,7 @@ public class Graph {
 		return new Point((int) maxCoordX, (int) maxCoordY);
 	}
 
+	// --------------------------------
 	// VERTEX
 	public void addVertex(Vertex vertex) {
 		vertexes.add(vertex);
@@ -120,6 +140,7 @@ public class Graph {
 		return edges.indexOf(edge);
 	}
 
+	// --------------------------------
 	private boolean checkExistEdge(Vertex v1, Vertex v2) {
 		for (Edge edge : edges) {
 			if (edge.getVertex1() == v1 && edge.getVertex2() == v2) {
@@ -161,11 +182,38 @@ public class Graph {
 		}
 	}
 
-	public List<Vertex> getVertexes() {
-		return vertexes;
+	// --------------------------------
+	public void actualOn() {
+		if (numberActualVertex != -1) {
+			getVertex(numberActualVertex).actualOn();
+		} else if (numberActualEdge != -1) {
+			getEdge(numberActualEdge).actualOn();
+		}
 	}
 
-	public List<Edge> getEdges() {
-		return edges;
+	public void actualOff() {
+		if (numberActualVertex != -1) {
+			getVertex(numberActualVertex).actualOff();
+		} else if (numberActualEdge != -1) {
+			getEdge(numberActualEdge).actualOff();
+		}
+	}
+	
+	public void selectAllObject() {
+		for (Vertex vertex : getVertexes()) {
+			vertex.activeOn();
+		}
+		for (Edge edge : edges) {
+			edge.activeOn();
+		}
+	}
+
+	public void deactivateAllObject() {
+		for (Vertex vertex : getVertexes()) {
+			vertex.activeOff();
+		}
+		for (Edge edge : edges) {
+			edge.activeOff();
+		}
 	}
 }

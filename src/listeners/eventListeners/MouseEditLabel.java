@@ -10,7 +10,7 @@ import main.Controller;
 
 
 public class MouseEditLabel extends MouseAdapter {
-    public MouseEditLabel(Controller c) {
+    public MouseEditLabel(int idGraph, Controller c) {
 	controller = c;
     }
 

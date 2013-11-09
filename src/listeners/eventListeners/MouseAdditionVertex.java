@@ -9,7 +9,7 @@ import main.Controller;
 
 
 public class MouseAdditionVertex extends MouseAdapter {
-    public MouseAdditionVertex(Controller c) {
+    public MouseAdditionVertex(int idGraph, Controller c) {
 	controller = c;
     }
 

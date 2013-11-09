@@ -22,12 +22,12 @@ import javax.swing.JOptionPane;
 
 import shell.MainFrame;
 
-public class Controller {	
+public class Controller {
 	private ListGraphs listGraphs;
 	private MainFrame mainFrame;
 
 	private Algoritm algoritm;
-	
+
 	private Point pointSelectionBegin;
 	private Point pointSelectionEnd;
 	private Point pointDragged;
@@ -36,7 +36,7 @@ public class Controller {
 	private boolean dragged;
 	private boolean algoritmFlag;
 
-	public Controller(){
+	public Controller() {
 		listGraphs = new ListGraphs();
 
 		algoritm = new Algoritm(this);
@@ -47,32 +47,27 @@ public class Controller {
 		dragged = false;
 		selection = false;
 	}
-	
-	public void repaint() {
-		mainFrame.paint();
+
+	public void startActions() {
+		createGraph();
 	}
 
 	public void setView(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 	}
-	
-	public void startActions(){
-		createGraph();
-	}
-	
-	public Graph getGraph(int id){
-		return listGraphs.get(id);
+
+	public void repaint() {
+		mainFrame.paint();
 	}
 
-	// ----------------------------------------
-	public Point getMaxCoords(int id) {
-		return getGraph(id).getMaxCoords();
+	public Graph getGraph(int id) {
+		return listGraphs.get(id);
 	}
 
 	// ----------------------------------------
 	public void setStatusDragged(boolean flag) {
 		dragged = flag;
-		repaint();
+		// repaint();
 	}
 
 	public boolean isStatusDragged() {
@@ -81,62 +76,27 @@ public class Controller {
 
 	public void setStatusSelection(boolean flag) {
 		selection = flag;
-		repaint();
+		// repaint();
 	}
 
 	public boolean isStatusSelection() {
 		return selection;
 	}
 
-	public boolean isAlgoritmFlag() {
-		return algoritmFlag;
-	}
-
-	public void setAlgoritmFlag(boolean algoritmFlag) {
-		this.algoritmFlag = algoritmFlag;
-	}
-
-	// ----------------------------------------
-	public int countVertex(int id) {
-		return getGraph(id).countVertexes();
-	}
-
-	public Vertex getVertex(int id, int i) {
-		return getGraph(id).getVertex(i);
-	}
-
-	public int countEdge(int id) {
-		return getGraph(id).countEdge();
-	}
-
-	public Edge getEdge(int id, int i) {
-		return getGraph(id).getEdge(i);
-	}
+	// public boolean isAlgoritmFlag() {
+	// return algoritmFlag;
+	// }
+	//
+	// public void setAlgoritmFlag(boolean algoritmFlag) {
+	// this.algoritmFlag = algoritmFlag;
+	// }
 
 	// ----------------------------------------
-	public void selectActualObject(int id, Point p) {
-		numActualVertex = getGraph(id).getIndexVertex(getGraph(id).findVertex(p));
-		numActualEdge = getGraph(id).getIndexEdge(getGraph(id).findEdge(p));
-	}
-
-	public void actualOn() {
-		if (numActualVertex != -1) {
-			getGraph().getVertex(numActualVertex).actualOn();
-		} else if (numActualEdge != -1) {
-			getGraph().getEdge(numActualEdge).actualOn();
-		}
-		repaint();
-	}
-
-	public void actualOff() {
-		if (numActualVertex != -1) {
-			getGraph().getVertex(numActualVertex).actualOff();
-		} else if (numActualEdge != -1) {
-			getGraph().getEdge(numActualEdge).actualOff();
-		}
-		repaint();
-	}
-
+	// public void selectActualObject(int id, Point p) {
+	// numActualVertex = getGraph(id).getIndexVertex(
+	// getGraph(id).findVertex(p));
+	// numActualEdge = getGraph(id).getIndexEdge(getGraph(id).findEdge(p));
+	// }
 	// ----------------------------------------
 	public void activateObject(Point p) {
 		if (getGraph().findVertex(p) != null) {
@@ -170,62 +130,44 @@ public class Controller {
 	}
 
 	// ----------------------------------------
-	public boolean checkPointIfEmpty(Point p) {
-		if (getGraph().findVertex(p) == null && getGraph().findEdge(p) == null) {
+	public boolean checkPointIfEmpty(int idGraph, Point p) {
+		if (listGraphs.getGraph(idGraph).findVertex(p) == null
+				&& getGraph().findEdge(p) == null) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean checkPointIfVertex(Point p) {
-		if (getGraph().findVertex(p) != null)
+	public boolean checkPointIfVertex(int idGraph, Point p) {
+		if (getGraph(idGraph).findVertex(p) != null)
 			return true;
 		return false;
 	}
 
-	public boolean checkPointIfEdge(Point p) {
-		if (getGraph().findEdge(p) != null)
+	public boolean checkPointIfEdge(int idGraph, Point p) {
+		if (getGraph(idGraph).findEdge(p) != null)
 			return true;
 		return false;
 	}
 
-	public boolean checkIfActive(Point p) {
-		if (getGraph().findVertex(p) != null) {
-			if (getGraph().findVertex(p).isActivate())
+	public boolean checkIfActive(int idGraph, Point p) {
+		Graph graph = getGraph(idGraph);
+		if (graph.findVertex(p) != null) {
+			if (graph.findVertex(p).isActivate()) {
 				return true;
+			}
 		}
-		if (getGraph().findEdge(p) != null) {
-			if (getGraph().findEdge(p).isActive())
+		if (graph.findEdge(p) != null) {
+			if (graph.findEdge(p).isActive()) {
 				return true;
+			}
 		}
 		return false;
-	}
-
-	// ----------------------------------------
-	public void selectAllObject() {
-		for (int numVertex = 0; numVertex < getGraph().countVertexes(); numVertex++) {
-			getGraph().getVertex(numVertex).activeOn();
-		}
-		for (int numEdge = 0; numEdge < getGraph().countEdge(); numEdge++) {
-			getGraph().getEdge(numEdge).activeOn();
-		}
-		repaint();
-	}
-
-	public void deactivateAllObject() {
-		for (int numVertex = 0; numVertex < getGraph().countVertexes(); numVertex++) {
-			getGraph().getVertex(numVertex).activeOff();
-		}
-		for (int numEdge = 0; numEdge < getGraph().countEdge(); numEdge++) {
-			getGraph().getEdge(numEdge).activeOff();
-		}
-		repaint();
 	}
 
 	// ------------------------------------------
 	public void renameVertex(Point p) {
-		String name = JOptionPane
-				.showInputDialog("Input name");
+		String name = JOptionPane.showInputDialog("Input name");
 		if (name != null) {
 			getGraph().findVertex(p).setName(name);
 		}
@@ -234,8 +176,7 @@ public class Controller {
 	public void renameSelectedVertexes() {
 		for (int numVertex = 0; numVertex < getGraph().countVertexes(); numVertex++) {
 			if (getGraph().getVertex(numVertex).isActivate()) {
-				String name = JOptionPane
-						.showInputDialog("Input name");
+				String name = JOptionPane.showInputDialog("Input name");
 				if (name != null) {
 					getGraph().getVertex(numVertex).setName(name);
 				}
@@ -244,8 +185,7 @@ public class Controller {
 	}
 
 	public void resizeEdge(Point p) {
-		String lenght = JOptionPane
-				.showInputDialog("Input size");
+		String lenght = JOptionPane.showInputDialog("Input size");
 		if (checkString(lenght) != -1) {
 			getGraph().findEdge(p).resize(Integer.parseInt(lenght));
 		}
@@ -254,8 +194,7 @@ public class Controller {
 	public void resizeSelectedEdges() {
 		for (int numEdge = 0; numEdge < getGraph().countEdge(); numEdge++) {
 			if (getGraph().getEdge(numEdge).isActive()) {
-				String lenght = JOptionPane
-						.showInputDialog("Input size");
+				String lenght = JOptionPane.showInputDialog("Input size");
 				getGraph().getEdge(numEdge).resize(checkString(lenght));
 			}
 		}
@@ -336,8 +275,8 @@ public class Controller {
 	public void setSelectionObjects() {
 		for (int numVertex = 0; numVertex < getGraph().countVertexes(); numVertex++) {
 			getGraph().getVertex(numVertex).activeOff();
-			if (getGraph().getVertex(numVertex).isVertexInArea(pointSelectionBegin,
-					pointSelectionEnd)) {
+			if (getGraph().getVertex(numVertex).isVertexInArea(
+					pointSelectionBegin, pointSelectionEnd)) {
 				getGraph().getVertex(numVertex).activeOn();
 			}
 		}
@@ -363,8 +302,8 @@ public class Controller {
 		for (int numVertex = 0; numVertex < getGraph().countVertexes(); numVertex++) {
 			Vertex vertex = getGraph().getVertex(numVertex);
 			if (vertex.isActivate()) {
-				getGraph().getVertex(numVertex).setPositionVertex(vertex.getX() - x,
-						vertex.getY() - y);
+				getGraph().getVertex(numVertex).setPositionVertex(
+						vertex.getX() - x, vertex.getY() - y);
 			}
 		}
 		pointDragged = p;
@@ -404,7 +343,8 @@ public class Controller {
 	}
 
 	public boolean checkPossibilityEdge(Point p) {
-		if (getGraph().findVertex(p) != beginTempEdge && getCurrentGraph().findVertex(p) != null) {
+		if (getGraph().findVertex(p) != beginTempEdge
+				&& getCurrentGraph().findVertex(p) != null) {
 			return true;
 		}
 		return false;
@@ -445,9 +385,11 @@ public class Controller {
 	public void repaintPanel() {
 		mainFrame.repaintPanel();
 	}
+
 	private int genIndexForNewGraph() {
 		return graphs.size();
 	}
+
 	private void createGraph() {
 		numActualVertex = -1;
 		numActualEdge = -1;
@@ -458,6 +400,6 @@ public class Controller {
 
 	public void create() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
