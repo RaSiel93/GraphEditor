@@ -1,4 +1,4 @@
-package listeners.behaviorListeners;
+package listeners.eventListeners;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;

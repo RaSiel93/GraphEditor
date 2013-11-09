@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-import listeners.behaviorListeners.WindowEvents;
 import listeners.commandListeners.RemoveSelectedObjects;
 import listeners.commandListeners.SelectAllObjects;
 import listeners.commandListeners.algoritm.AlgoritmRun;
@@ -27,6 +26,7 @@ import listeners.commandListeners.main.Save;
 import listeners.commandListeners.mode.EnabledEdgeMode;
 import listeners.commandListeners.mode.EnabledEditMode;
 import listeners.commandListeners.mode.EnabledVertexMode;
+import listeners.eventListeners.WindowEvents;
 import main.Controller;
 
 public class MainFrame extends JFrame {

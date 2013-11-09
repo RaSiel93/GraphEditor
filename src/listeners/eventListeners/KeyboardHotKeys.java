@@ -1,4 +1,4 @@
-package listeners.behaviorListeners;
+package listeners.eventListeners;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;

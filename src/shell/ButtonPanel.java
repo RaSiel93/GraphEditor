@@ -11,7 +11,8 @@ class ButtonPanel extends JPanel {
 		box.add(Box.createVerticalStrut(100));
 		for (final ButtonEnum button : ButtonEnum.values()) {
 			Button buttonComponent = new Button(button.getLabel());
-			buttonComponent.addActionListener(listeners.get(button.getMethod()));
+			buttonComponent
+					.addActionListener(listeners.get(button.getMethod()));
 			box.add(buttonComponent);
 			box.add(Box.createVerticalStrut(10));
 		}

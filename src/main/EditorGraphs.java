@@ -1,15 +1,16 @@
 package main;
 
-import graph.Graph;
 import shell.MainFrame;
 
 public class EditorGraphs {
 	public static void main(String[] args) throws NoSuchMethodException, SecurityException{
 		initialize();
-
+		
 		Controller controller = new Controller();
 		MainFrame mainFrame = new MainFrame(controller);
+		
 		controller.setView(mainFrame);
+		controller.startActions();
 	}
 	
 	private static void initialize(){

@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
+	static long mainId = 0;
+	long id;
 	int SELECTION_OFFSET = 8;
 	private List<Vertex> vertexes;
 	private List<Edge> edges;
 
 	public Graph() {
+		id = mainId++;
 		vertexes = new ArrayList<Vertex>();
 		edges = new ArrayList<Edge>();
 	}
@@ -29,6 +32,10 @@ public class Graph {
 		for (Edge edge : graph.edges) {
 			this.edges.add(edge);
 		}
+	}
+
+	public long getId() {
+		return id;
 	}
 
 	public Point getMaxCoords() {
@@ -152,5 +159,13 @@ public class Graph {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<Vertex> getVertexes() {
+		return vertexes;
+	}
+
+	public List<Edge> getEdges() {
+		return edges;
 	}
 }

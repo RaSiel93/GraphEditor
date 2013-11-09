@@ -1,4 +1,4 @@
-package listeners.behaviorListeners;
+package listeners.eventListeners;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,8 +9,8 @@ import main.Controller;
 
 
 
-public class MouseEdit extends MouseAdapter {
-    public MouseEdit(Controller c) {
+public class MouseEditLabel extends MouseAdapter {
+    public MouseEditLabel(Controller c) {
 	controller = c;
     }
 
