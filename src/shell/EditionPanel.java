@@ -8,6 +8,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
@@ -28,6 +29,10 @@ import listeners.eventListeners.MouseTemporarySelection;
 import main.Controller;
 
 public class EditionPanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int ARROW_LEN = 5;
 	private double ARROW_ANGLE = 0.7;
 
@@ -38,7 +43,7 @@ public class EditionPanel extends JPanel {
 	private MouseListener edgeMouseListener;
 	private MouseListener editLabelMouseListener;
 
-	public EditionPanel(int idGraph, Controller controller) {
+	public EditionPanel(int idGraph, Controller controller) {		
 		setFocusable(true);
 		setBackground(Color.WHITE);
 
@@ -55,6 +60,8 @@ public class EditionPanel extends JPanel {
 		addMouseMotionListener(new MouseMotionTempEdge(controller));
 		addMouseMotionListener(new MouseTemporarySelection(controller));
 		addMouseMotionListener(new MouseRegionalActivation(controller));
+		
+		setVisible(true);
 	}
 
 	public int getId(){
@@ -70,20 +77,22 @@ public class EditionPanel extends JPanel {
 		}
 	}
 
-	public void paintComponent(Graphics2D g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		resizeEditionPanel();
-		printEdge(g);
-		printVertex(g);
-		printTemporaryEdge(g);
-		printRegionalActivation(g);
+		printEdge(g2);
+		printVertex(g2);
+		printTemporaryEdge(g2);
+		printRegionalActivation(g2);
 	}
 
 	public void enableVertexMode() {
 		removeListeners();
+		addMouseListener(vertexMouseListener);
 		controller.getCurrentGraph().removeTempEdge();
 	}
 
@@ -100,9 +109,9 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void removeListeners() {
-		removeMouseListener(vertexMouseListener);
-		removeMouseListener(vertexMouseListener);
-		removeMouseListener(vertexMouseListener);
+//		removeMouseListener(vertexMouseListener);
+		removeMouseListener(edgeMouseListener);
+		removeMouseListener(editLabelMouseListener);
 	}
 	
 	private void printEdge(Graphics2D g) {

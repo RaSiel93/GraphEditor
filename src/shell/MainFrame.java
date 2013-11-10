@@ -1,6 +1,7 @@
 package shell;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -34,12 +35,13 @@ public class MainFrame extends JFrame {
 	private Map<String, ActionListener> listeners;
 
 	private JTabbedPane tabbedPane;
-
+	private JScrollPane scrollPane;
+	
 	public MainFrame(Controller controller) {
 		setTitle("Editor Graph");
 		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
+
 		this.controller = controller;
 		listeners = initListeners();
 
@@ -48,7 +50,9 @@ public class MainFrame extends JFrame {
 		ButtonPanel buttonPanel = new ButtonPanel(listeners);
 
 		this.tabbedPane = new JTabbedPane();
-		JScrollPane scrollPane = new JScrollPane(tabbedPane);
+		this.tabbedPane.setVisible(true);
+		
+		this.scrollPane = new JScrollPane(tabbedPane);
 		scrollPane
 				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane
@@ -58,14 +62,14 @@ public class MainFrame extends JFrame {
 		Container contentPane = getContentPane();
 		contentPane.add(menuPanel, BorderLayout.NORTH);
 		contentPane.add(buttonPanel, BorderLayout.WEST);
-		contentPane.add(scrollPane, BorderLayout.CENTER);
+		contentPane.add(tabbedPane, BorderLayout.CENTER);
 
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 
 	private Map<String, ActionListener> initListeners() {
-		
+
 		Map<String, ActionListener> listeners = new HashMap<String, ActionListener>();
 		listeners.put("VERTEX_MODE", new EnabledVertexMode(this));
 		listeners.put("EDGE_MODE", new EnabledEdgeMode(this));
@@ -77,10 +81,10 @@ public class MainFrame extends JFrame {
 		listeners.put("EXIT", new Exit(controller));
 		listeners.put("SELECT_ALL", new SelectAllObjects(controller));
 		listeners.put("REMOVE", new RemoveSelectedObjects(controller));
-//		listeners.put("RUN_ALGO", new AlgoritmRun(controller));
-//		listeners.put("STEP_ALGO", new AlgoritmStep(controller));
-//		listeners.put("STOP_ALGO", new AlgoritmStop(controller));
-		
+		// listeners.put("RUN_ALGO", new AlgoritmRun(controller));
+		// listeners.put("STEP_ALGO", new AlgoritmStep(controller));
+		// listeners.put("STOP_ALGO", new AlgoritmStop(controller));
+
 		return listeners;
 	}
 
@@ -91,15 +95,6 @@ public class MainFrame extends JFrame {
 	EditionPanel getCurrentPanel() {
 		return (EditionPanel) tabbedPane.getComponent(tabbedPane
 				.getSelectedIndex());
-	}
-
-	public void paint() {
-		tabbedPane.repaint();
-		this.repaint();
-		this.revalidate();
-		tabbedPane.repaint();
-		this.repaint();
-		this.revalidate();
 	}
 
 	public void enableVertexMode() {
@@ -121,7 +116,6 @@ public class MainFrame extends JFrame {
 	public void addTab(int id, String header) {
 		tabbedPane.addTab(header, new EditionPanel(id, controller));
 		tabbedPane.setSelectedIndex(tabbedPane.getComponentCount() - 1);
-		paint();
 	}
 
 	public void removeTab() {

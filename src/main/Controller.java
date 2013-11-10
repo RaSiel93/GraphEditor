@@ -57,7 +57,7 @@ public class Controller {
 	}
 
 	public void repaint() {
-		mainFrame.paint();
+		mainFrame.repaint();
 	}
 
 	public Graph getCurrentGraph() {
