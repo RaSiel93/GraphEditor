@@ -61,20 +61,34 @@ public class Controller {
 	}
 
 	// ----------------------------------------
-	public void setStatusDragged(boolean flag) {
+	public void setDragged(boolean flag) {
 		dragged = flag;
 	}
 
-	public boolean isStatusDragged() {
+	public boolean isDragged() {
 		return dragged;
 	}
 
-	public void setStatusSelection(boolean flag) {
+	public boolean isPassibleDragged() {
+		if (!isSelection() && !getCurrentGraph().checkExistsTempEdge()) {
+			return true;
+		}
+		return false;
+	}
+
+	public void setSelection(boolean flag) {
 		selection = flag;
 	}
 
-	public boolean isStatusSelection() {
+	public boolean isSelection() {
 		return selection;
+	}
+
+	public boolean isPassibleSelection() {
+		if (!isDragged() && !getCurrentGraph().checkExistsTempEdge()) {
+			return true;
+		}
+		return false;
 	}
 
 	// public boolean isAlgoritmFlag() {
@@ -93,9 +107,16 @@ public class Controller {
 	// }
 	// ----------------------------------------
 	// ----------------------------------------
-	public boolean checkObject(Point point) {
-		if (getCurrentGraph().findVertex(point) == null
-				&& getCurrentGraph().findEdge(point) == null) {
+	public boolean isObject(Point point) {
+		if (getCurrentGraph().findVertex(point) != null
+				|| getCurrentGraph().findEdge(point) != null) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isVertex(Point point) {
+		if (getCurrentGraph().findVertex(point) != null) {
 			return true;
 		}
 		return false;
@@ -123,7 +144,7 @@ public class Controller {
 			}
 		}
 		if (graph.findEdge(point) != null) {
-			if (graph.findEdge(point).isActive()) {
+			if (graph.findEdge(point).isActivate()) {
 				return true;
 			}
 		}
@@ -163,7 +184,7 @@ public class Controller {
 
 	public void resizeSelectedEdges() {
 		for (Edge edge : getCurrentGraph().getEdges()) {
-			if (edge.isActive()) {
+			if (edge.isActivate()) {
 				String lenght = JOptionPane.showInputDialog("Input size");
 				try {
 					int size = Integer.parseInt(lenght);
@@ -237,13 +258,19 @@ public class Controller {
 		pointDragged = point;
 	}
 
-	public void dragObjects(Point point) {
-		double x = (double) pointDragged.getX() - (double) point.getX();
-		double y = (double) pointDragged.getY() - (double) point.getY();
+	public void shiftObjects(Point point) {
+		double x = pointDragged.getX() - point.getX();
+		double y = pointDragged.getY() - point.getY();
 
 		for (Vertex vertex : getCurrentGraph().getVertexes()) {
 			if (vertex.isActivate()) {
-				vertex.setPositionVertex(vertex.getX() - x, vertex.getY() - y);
+				vertex.shiftVertex(x, y);
+			}
+		}
+		for (Edge edge : getCurrentGraph().getEdges()) {
+			if (edge.isActivate()) {
+				edge.getVertex1().shiftVertex(x, y);
+				edge.getVertex2().shiftVertex(x, y);
 			}
 		}
 		pointDragged = point;

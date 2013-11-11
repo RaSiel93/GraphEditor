@@ -19,11 +19,11 @@ public class KeyboardHotKeys extends KeyAdapter {
 			if (controller.getCurrentGraph().checkExistsTempEdge())
 				controller.removeTempEdge();
 		}
-		if (!controller.isStatusDragged() && !controller.isStatusSelection()
+		if (!controller.isDragged() && !controller.isSelection()
 				&& event.getKeyCode() == KeyEvent.VK_DELETE) {
 			controller.removeSelectedObjects();
 		}
-		if (!controller.isStatusDragged() && !controller.isStatusSelection()
+		if (!controller.isDragged() && !controller.isSelection()
 				|| event.isControlDown()) {
 			if (event.getKeyCode() == KeyEvent.VK_A && event.isControlDown()) {
 				controller.activateAll();
@@ -32,7 +32,7 @@ public class KeyboardHotKeys extends KeyAdapter {
 				controller.save();
 			}
 		}
-		if (!controller.isStatusDragged() && !controller.isStatusSelection()
+		if (!controller.isDragged() && !controller.isSelection()
 				|| event.isControlDown()) {
 			if (event.getKeyCode() == KeyEvent.VK_I) {
 				controller.renameSelectedVertexes();

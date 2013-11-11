@@ -25,7 +25,7 @@ public class Edge extends Line2D.Double {
 		active = false;
 	}
 
-	public boolean isActive() {
+	public boolean isActivate() {
 		return active;
 	}
 

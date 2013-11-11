@@ -7,24 +7,20 @@ import main.Controller;
 
 public class MouseDragObjects implements MouseMotionListener {
 	Controller controller;
-	
+
 	public MouseDragObjects(Controller controller) {
 		this.controller = controller;
 	}
 
 	public void mouseDragged(MouseEvent event) {
-		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()
-				|| event.isShiftDown()) {
-			if (!controller.checkObject(event.getPoint())
-					&& !controller.isStatusSelection()) {
-				controller.setStatusDragged(true);
+		if (event.getModifiers() == event.BUTTON1_MASK) {
+			if (controller.isPassibleDragged() && controller.isObject(event.getPoint())) {
+				controller.setDragged(true);
 			}
-			if (controller.isStatusDragged()) {
-				controller.dragObjects(event.getPoint());
-				if (controller.getCurrentGraph().checkExistsTempEdge()) {
-					controller.getCurrentGraph().setEndTempEdge(event.getPoint());
-				}
+			if (controller.isDragged()) {
+				controller.shiftObjects(event.getPoint());
 			}
+			controller.repaint();
 		}
 	}
 

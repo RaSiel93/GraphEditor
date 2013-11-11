@@ -223,7 +223,7 @@ public class Graph {
 
 		int countEdges = 0;
 		for (Edge edge : getEdges()) {
-			if (edge.isActive()) {
+			if (edge.isActivate()) {
 				countEdges++;
 			}
 		}
@@ -255,7 +255,7 @@ public class Graph {
 			}
 		}
 		for (Edge edge : getEdges()) {
-			if (edge.isActive()) {
+			if (edge.isActivate()) {
 				removeEdge(edge);
 			}
 		}

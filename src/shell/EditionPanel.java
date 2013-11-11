@@ -26,7 +26,7 @@ import listeners.eventListeners.MouseDrawMotion;
 import listeners.eventListeners.MouseEditLabel;
 import listeners.eventListeners.MouseMotionTempEdge;
 import listeners.eventListeners.MousePressingActivation;
-import listeners.eventListeners.MouseRegionalActivation;
+import listeners.eventListeners.MouseRegionalSelection;
 import listeners.eventListeners.MouseTemporarySelection;
 import main.Controller;
 
@@ -61,7 +61,7 @@ public class EditionPanel extends JPanel {
 		addMouseMotionListener(new MouseDragObjects(controller));
 		addMouseMotionListener(new MouseMotionTempEdge(controller));
 		addMouseMotionListener(new MouseTemporarySelection(controller));
-		addMouseMotionListener(new MouseRegionalActivation(controller));
+		addMouseMotionListener(new MouseRegionalSelection(controller));
 	}
 
 	public int getId() {
@@ -183,7 +183,7 @@ public class EditionPanel extends JPanel {
 		Edge actualEdge = controller.getCurrentGraph().getActualEdge();
 		if (edge == actualEdge) {
 			return Color.ORANGE;
-		} else if (edge.isActive()) {
+		} else if (edge.isActivate()) {
 			return Color.GREEN;
 		} else {
 			return Color.LIGHT_GRAY;
@@ -210,7 +210,7 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void printRegionalActivation(Graphics2D g) {
-		if (controller.isStatusSelection()) {
+		if (controller.isSelection()) {
 			g.setColor(Color.green);
 			g.setStroke(new BasicStroke(1.0f));
 			g.draw(controller.getSelectionBorder());
@@ -223,7 +223,7 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void resizeEditionPanel() {
-		if (!controller.isStatusSelection() && !controller.isStatusDragged()) {
+		if (!controller.isSelection() && !controller.isDragged()) {
 			Point maxCoords = controller.getCurrentGraph().getMaxCoords();
 			setPreferredSize(new Dimension((int) maxCoords.getX(),
 					(int) maxCoords.getY()));

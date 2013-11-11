@@ -49,8 +49,8 @@ public class Vertex extends Ellipse2D.Double {
 		return this.getY() + SIDELENGTH / 2;
 	}
 
-	public void setPositionVertex(double x, double y) {
-		setFrame(x, y, SIDELENGTH, SIDELENGTH);
+	public void shiftVertex(double x, double y) {
+		setFrame(getX() - x, getY() - y, SIDELENGTH, SIDELENGTH);
 	}
 
 	public boolean isVertexInArea(Point p1, Point p2) {
