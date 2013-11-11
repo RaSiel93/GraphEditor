@@ -5,35 +5,20 @@ import java.awt.geom.Ellipse2D;
 
 public class Vertex extends Ellipse2D.Double {
 	private static final int SIDELENGTH = 20;
-	private boolean actual;
-	private boolean active;
+	private boolean active = false;
 	private String name = "";
 
 	public Vertex(Vertex v) {
 		super(v.getX() - SIDELENGTH / 2, v.getY() - SIDELENGTH / 2, SIDELENGTH,
 				SIDELENGTH);
-//		actualOff();
 	}
 
 	public Vertex(double x, double y) {
 		super(x - SIDELENGTH / 2, y - SIDELENGTH / 2, SIDELENGTH, SIDELENGTH);
-//		actualOff();
 	}
 
 	public Vertex(Point point) {
 		super(point.getX() - SIDELENGTH / 2, point.getY() - SIDELENGTH / 2, SIDELENGTH, SIDELENGTH);
-	}
-
-	public void actualOn() {
-		actual = true;
-	}
-
-	public void actualOff() {
-		actual = false;
-	}
-
-	public boolean isActual() {
-		return actual;
 	}
 
 	public void activeOn() {

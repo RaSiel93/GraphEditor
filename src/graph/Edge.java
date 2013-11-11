@@ -9,42 +9,12 @@ public class Edge extends Line2D.Double {
 	private Vertex vertex2;
 	private int lenght;
 	private boolean active;
-	private boolean actual;
 
 	public Edge(Vertex beginVertex, Vertex endVertex) {
 		vertex1 = beginVertex;
 		vertex2 = endVertex;
 		lenght = 1;
-		activeOn();
 		refresh();
-	}
-
-	public Edge(Edge edge) {
-		vertex1 = edge.getVertex1();
-		vertex2 = edge.getVertex2();
-		lenght = 1;
-		activeOn();
-		refresh();
-	}
-
-	public Edge(Point beginTempEdge, Point endTempEdge) {
-		vertex1 = new Vertex(beginTempEdge);
-		vertex2 = new Vertex(endTempEdge);
-		lenght = 1;
-		activeOn();
-		refresh();
-	}
-
-	public void actualOn() {
-		actual = true;
-	}
-
-	public void actualOff() {
-		actual = false;
-	}
-
-	public boolean isActual() {
-		return actual;
 	}
 
 	public void activeOn() {

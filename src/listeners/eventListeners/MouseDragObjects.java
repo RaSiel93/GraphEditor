@@ -15,7 +15,7 @@ public class MouseDragObjects implements MouseMotionListener {
 	public void mouseDragged(MouseEvent event) {
 		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()
 				|| event.isShiftDown()) {
-			if (!controller.checkPointIfEmpty(event.getPoint())
+			if (!controller.checkObject(event.getPoint())
 					&& !controller.isStatusSelection()) {
 				controller.setStatusDragged(true);
 			}

@@ -16,14 +16,7 @@ public class MouseTemporarySelection implements MouseMotionListener {
 	}
 
 	public void mouseMoved(MouseEvent event) {
-		if (event.getModifiers() != event.BUTTON1_MASK) {
-			if (controller.checkPointIfEmpty(event.getPoint())) {
-				controller.getCurrentGraph().actualOff();
-				controller.getCurrentGraph().activate(event.getPoint());
-				controller.getCurrentGraph().actualOn();
-			} else {
-				controller.getCurrentGraph().actualOff();
-			}
-		}
+		controller.getCurrentGraph().setActualObject(event.getPoint());
+		controller.repaint();
 	}
 }

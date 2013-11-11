@@ -17,7 +17,7 @@ public class MouseRegionalActivation implements MouseMotionListener {
 		if (event.getModifiers() == event.BUTTON1_MASK
 				&& !controller.isStatusDragged()
 				&& !controller.getCurrentGraph().checkExistsTempEdge() || event.isControlDown()) {
-			if (controller.checkPointIfEmpty(event.getPoint())
+			if (controller.checkObject(event.getPoint())
 					&& !controller.isStatusSelection()) {
 				controller.setStatusSelection(true);
 				controller.setPointSelectionBegin(event.getPoint());

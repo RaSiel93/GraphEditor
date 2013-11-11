@@ -31,9 +31,7 @@ import listeners.eventListeners.MouseTemporarySelection;
 import main.Controller;
 
 public class EditionPanel extends JPanel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int ARROW_LEN = 5;
 	private double ARROW_ANGLE = 0.7;
@@ -45,7 +43,7 @@ public class EditionPanel extends JPanel {
 	private MouseListener edgeMouseListener;
 	private MouseListener editLabelMouseListener;
 
-	public EditionPanel(int idGraph, Controller controller) {		
+	public EditionPanel(int idGraph, Controller controller) {
 		setFocusable(true);
 		setBackground(Color.WHITE);
 
@@ -56,8 +54,6 @@ public class EditionPanel extends JPanel {
 		this.edgeMouseListener = new MouseAdditionEdge(controller);
 		this.editLabelMouseListener = new MouseEditLabel(controller);
 
-		
-		
 		addKeyListener(new KeyboardHotKeys(controller));
 		addMouseListener(new MousePressingActivation(controller));
 		addMouseMotionListener(new MouseDrawClicked(controller));
@@ -66,32 +62,21 @@ public class EditionPanel extends JPanel {
 		addMouseMotionListener(new MouseMotionTempEdge(controller));
 		addMouseMotionListener(new MouseTemporarySelection(controller));
 		addMouseMotionListener(new MouseRegionalActivation(controller));
-		
-		setVisible(true);
 	}
 
-	public int getId(){
+	public int getId() {
 		return idGraph;
-	}
-	
-	private void resizeEditionPanel() {
-		if (!controller.isStatusSelection() && !controller.isStatusDragged()) {
-			Point maxCoords = controller.getCurrentGraph().getMaxCoords();
-			setPreferredSize(new Dimension((int) maxCoords.getX(),
-					(int) maxCoords.getY()));
-			revalidate();
-		}
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D)g;
+		Graphics2D g2 = (Graphics2D) g;
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 
 		resizeEditionPanel();
-		printEdge(g2);
-		printVertex(g2);
+		printEdges(g2);
+		printVertexes(g2);
 		printTemporaryEdge(g2);
 		printRegionalActivation(g2);
 	}
@@ -115,48 +100,46 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void removeListeners() {
-//		removeMouseListener(vertexMouseListener);
+		// removeMouseListener(vertexMouseListener);
 		removeMouseListener(edgeMouseListener);
 		removeMouseListener(editLabelMouseListener);
 	}
-	
-	private void printEdge(Graphics2D g) {
+
+	private void printEdges(Graphics2D g) {
 		for (Edge edge : controller.getCurrentGraph().getEdges()) {
-			edge.refresh();
-			if (edge.isActual()) {
-				g.setColor(Color.orange);
-			} else if (edge.isActive()) {
-				g.setColor(Color.green);
-			} else {
-				g.setColor(Color.LIGHT_GRAY);
-			}
-			g.setStroke(new BasicStroke(4.0f));
-			g.draw(edge);
-
-			printArrow(g, edge.getPointBeginEdge(), edge.getAngle(),
-					g.getColor());
-
-			printEdgeLenght(
-					g,
-					new Point((int) edge.getCenterX(), (int) edge.getCenterY()),
-					edge.getLenght());
-
-			g.setColor(Color.black);
-			g.setStroke(new BasicStroke(2.0f));
-			g.draw(edge);
+			printEdge(g, edge, selectionColor(edge));
 		}
 	}
 
-	private void printArrow(Graphics2D g, Point point, double angle,
-			Color color) {
+	private void printEdge(Graphics2D g, Edge edge, Color color) {
+		edge.refresh();
+
 		g.setColor(color);
 		g.setStroke(new BasicStroke(4.0f));
-		Line2D.Double line1 = new Line2D.Double(point.getX(), point.getY(),
+		g.draw(edge);
+
+		printArrow(g, edge.getPointBeginEdge(), edge.getAngle(), g.getColor());
+
+		printEdgeLenght(g,
+				new Point((int) edge.getCenterX(), (int) edge.getCenterY()),
+				edge.getLenght());
+
+		g.setColor(Color.black);
+		g.setStroke(new BasicStroke(2.0f));
+		g.draw(edge);
+	}
+
+	private void printArrow(Graphics2D g, Point point, double angle, Color color) {
+		Line2D line1 = new Line2D.Double(point.getX(), point.getY(),
 				point.getX() - ARROW_LEN * Math.cos(angle - ARROW_ANGLE),
 				point.getY() + ARROW_LEN * Math.sin(angle - ARROW_ANGLE));
-		Line2D.Double line2 = new Line2D.Double(point.getX(), point.getY(),
+
+		Line2D line2 = new Line2D.Double(point.getX(), point.getY(),
 				point.getX() + ARROW_LEN * Math.cos(angle + ARROW_ANGLE),
 				point.getY() - ARROW_LEN * Math.sin(angle + ARROW_ANGLE));
+
+		g.setColor(color);
+		g.setStroke(new BasicStroke(4.0f));
 		g.draw(line1);
 		g.draw(line2);
 
@@ -175,26 +158,46 @@ public class EditionPanel extends JPanel {
 		}
 	}
 
-	private void printVertex(Graphics2D g) {
+	private void printVertexes(Graphics2D g2) {
 		for (Vertex vertex : controller.getCurrentGraph().getVertexes()) {
-			if (vertex.isActual()) {
-				g.setColor(Color.orange);
-			} else if (vertex.isActivate()) {
-				g.setColor(Color.green);
-			} else {
-				g.setColor(Color.LIGHT_GRAY);
-			}
-			g.setStroke(new BasicStroke(10.0f));
-			g.draw(vertex);
+			printVertex(g2, vertex, selectionColor(vertex));
+		}
+	}
 
-			g.setColor(Color.black);
-			g.setStroke(new BasicStroke(4.0f));
-			g.draw(vertex);
+	private void printVertex(Graphics2D g, Vertex vertex, Color color) {
+		g.setColor(color);
+		g.setStroke(new BasicStroke(10.0f));
+		g.draw(vertex);
 
-			g.setColor(Color.red);
-			g.setFont(new Font("Times New Roman", Font.BOLD, 14));
-			g.drawString(vertex.getName(), (int) vertex.getCenterX() - 15,
-					(int) vertex.getCenterY() + 20);
+		g.setColor(Color.black);
+		g.setStroke(new BasicStroke(4.0f));
+		g.draw(vertex);
+
+		g.setColor(Color.red);
+		g.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		g.drawString(vertex.getName(), (int) vertex.getCenterX() - 15,
+				(int) vertex.getCenterY() + 20);
+	}
+
+	private Color selectionColor(Edge edge) {
+		Edge actualEdge = controller.getCurrentGraph().getActualEdge();
+		if (edge == actualEdge) {
+			return Color.ORANGE;
+		} else if (edge.isActive()) {
+			return Color.GREEN;
+		} else {
+			return Color.LIGHT_GRAY;
+		}
+	}
+	
+	private Color selectionColor(Vertex vertex) {
+		Vertex actualVertex = controller.getCurrentGraph().getActualVertex();
+		if (vertex == actualVertex) {
+			return Color.ORANGE;
+		} else if (vertex.isActivate()) {
+			return Color.GREEN;
+		} else {
+			return Color.LIGHT_GRAY;
 		}
 	}
 
@@ -216,6 +219,15 @@ public class EditionPanel extends JPanel {
 			g.setComposite(ac);
 			g.setColor(Color.orange);
 			g.fill(controller.getSelectionBorder());
+		}
+	}
+
+	private void resizeEditionPanel() {
+		if (!controller.isStatusSelection() && !controller.isStatusDragged()) {
+			Point maxCoords = controller.getCurrentGraph().getMaxCoords();
+			setPreferredSize(new Dimension((int) maxCoords.getX(),
+					(int) maxCoords.getY()));
+			revalidate();
 		}
 	}
 }

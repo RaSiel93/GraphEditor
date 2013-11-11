@@ -15,11 +15,11 @@ public class MousePressingActivation extends MouseAdapter {
 
 	public void mousePressed(MouseEvent event) {
 		// if(!controller.isStatusDragged() && !controller.isStatusSelection()){
-		if (controller.checkPointIfEmpty(event.getPoint())
+		if (controller.checkObject(event.getPoint())
 				&& !event.isControlDown()) {
 			controller.getCurrentGraph().deactivateAll();
 		}
-		if (!controller.checkPointIfEmpty(event.getPoint())
+		if (!controller.checkObject(event.getPoint())
 				|| event.isControlDown()) {
 			if (controller.checkIfActive(event.getPoint())) {
 				if (event.isControlDown()) {
@@ -43,12 +43,12 @@ public class MousePressingActivation extends MouseAdapter {
 
 	public void mouseReleased(MouseEvent event) {
 		if (!controller.isStatusDragged() && !controller.isStatusSelection()) {
-			if (controller.checkPointIfEmpty(event.getPoint())
+			if (controller.checkObject(event.getPoint())
 					&& !event.isControlDown()) {
 				controller.getCurrentGraph().deactivateAll();
 				controller.repaint();
 			}
-			if (!controller.checkPointIfEmpty(event.getPoint())
+			if (!controller.checkObject(event.getPoint())
 					|| event.isControlDown()) {
 				if (controller.checkIfActive(event.getPoint())) {
 					if (event.isControlDown() && isDeactiv) {

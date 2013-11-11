@@ -93,7 +93,7 @@ public class Controller {
 	// }
 	// ----------------------------------------
 	// ----------------------------------------
-	public boolean checkPointIfEmpty(Point point) {
+	public boolean checkObject(Point point) {
 		if (getCurrentGraph().findVertex(point) == null
 				&& getCurrentGraph().findEdge(point) == null) {
 			return true;

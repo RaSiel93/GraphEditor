@@ -12,31 +12,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Graph {
+	int SELECTION_OFFSET = 8;
+	
 	static int mainId = 0;
 	int id;
-	int SELECTION_OFFSET = 8;
+	
 	private List<Vertex> vertexes;
 	private List<Edge> edges;
 
-	private int numberActualVertex;
-	private int numberActualEdge;
+	private Vertex actualVertex = null;
+	private Edge actualEdge = null;
 
-	private Edge tempararyEdge;
-
-	// private Vertex beginTempEdge;
-	// private Vertex endTempEdge;
+	private Edge tempararyEdge = null;
 
 	public Graph() {
 		id = mainId++;
 		vertexes = new ArrayList<Vertex>();
 		edges = new ArrayList<Edge>();
-
-		numberActualVertex = -1;
-		numberActualEdge = -1;
-
-		tempararyEdge = null;
-		// beginTempEdge = null;
-		// endTempEdge = null;
 	}
 
 	public Graph(Graph graph) {
@@ -61,6 +53,14 @@ public class Graph {
 	public List<Edge> getEdges() {
 		return edges;
 	}
+	
+	public Vertex getActualVertex(){
+		return this.actualVertex;
+	}
+	
+	public Edge getActualEdge(){
+		return this.actualEdge;
+	}
 
 	public Point getMaxCoords() {
 		double maxCoordX = 0;
@@ -80,9 +80,6 @@ public class Graph {
 	// VERTEX
 	public void addVertex(Vertex vertex) {
 		vertexes.add(vertex);
-		numberActualVertex = vertexes.indexOf(vertex);
-		vertex.activeOn();
-		vertex.actualOn();
 	}
 
 	public Vertex getVertex(int numVertex) {
@@ -195,20 +192,9 @@ public class Graph {
 	}
 
 	// --------------------------------
-	public void actualOn() {
-		if (numberActualVertex != -1) {
-			getVertex(numberActualVertex).actualOn();
-		} else if (numberActualEdge != -1) {
-			getEdge(numberActualEdge).actualOn();
-		}
-	}
-
-	public void actualOff() {
-		if (numberActualVertex != -1) {
-			getVertex(numberActualVertex).actualOff();
-		} else if (numberActualEdge != -1) {
-			getEdge(numberActualEdge).actualOff();
-		}
+	public void setActualObject(Point point) {
+		actualVertex = findVertex(point);
+		actualEdge = findEdge(point);
 	}
 
 	public void activate(Point point) {
@@ -273,8 +259,6 @@ public class Graph {
 				removeEdge(edge);
 			}
 		}
-		numberActualVertex = -1;
-		numberActualEdge = -1;
 		removeTempEdge();
 	}
 
