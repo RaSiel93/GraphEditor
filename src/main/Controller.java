@@ -49,15 +49,11 @@ public class Controller {
 	}
 
 	public void startActions() {
-//		create();
+		create();
 	}
 
 	public void setView(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
-	}
-
-	public void repaint() {
-		mainFrame.repaint();
 	}
 
 	public Graph getCurrentGraph() {
@@ -67,7 +63,6 @@ public class Controller {
 	// ----------------------------------------
 	public void setStatusDragged(boolean flag) {
 		dragged = flag;
-		// repaint();
 	}
 
 	public boolean isStatusDragged() {
@@ -76,7 +71,6 @@ public class Controller {
 
 	public void setStatusSelection(boolean flag) {
 		selection = flag;
-		// repaint();
 	}
 
 	public boolean isStatusSelection() {
@@ -194,7 +188,6 @@ public class Controller {
 	public void addVertex(Point p) {
 		Vertex vertex = new Vertex(p.getX(), p.getY());
 		getCurrentGraph().addVertex(vertex);
-		repaint();
 	}
 
 	// ------------------------------------------
@@ -254,7 +247,6 @@ public class Controller {
 			}
 		}
 		pointDragged = point;
-		repaint();
 	}
 
 	// -------------------------------------
@@ -290,7 +282,6 @@ public class Controller {
 				e.printStackTrace();
 			}
 		}
-		repaint();
 	}
 
 	public void save() {
@@ -325,5 +316,9 @@ public class Controller {
 
 	public void removeTempEdge() {
 		getCurrentGraph().removeTempEdge();
+	}
+
+	public void repaint() {
+		mainFrame.repaint();
 	}
 }

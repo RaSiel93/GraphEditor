@@ -21,6 +21,8 @@ import listeners.eventListeners.KeyboardHotKeys;
 import listeners.eventListeners.MouseAdditionEdge;
 import listeners.eventListeners.MouseAdditionVertex;
 import listeners.eventListeners.MouseDragObjects;
+import listeners.eventListeners.MouseDrawClicked;
+import listeners.eventListeners.MouseDrawMotion;
 import listeners.eventListeners.MouseEditLabel;
 import listeners.eventListeners.MouseMotionTempEdge;
 import listeners.eventListeners.MousePressingActivation;
@@ -54,8 +56,12 @@ public class EditionPanel extends JPanel {
 		this.edgeMouseListener = new MouseAdditionEdge(controller);
 		this.editLabelMouseListener = new MouseEditLabel(controller);
 
+		
+		
 		addKeyListener(new KeyboardHotKeys(controller));
 		addMouseListener(new MousePressingActivation(controller));
+		addMouseMotionListener(new MouseDrawClicked(controller));
+		addMouseMotionListener(new MouseDrawMotion(controller));
 		addMouseMotionListener(new MouseDragObjects(controller));
 		addMouseMotionListener(new MouseMotionTempEdge(controller));
 		addMouseMotionListener(new MouseTemporarySelection(controller));

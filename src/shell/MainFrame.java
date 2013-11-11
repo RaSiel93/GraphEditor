@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -50,14 +51,14 @@ public class MainFrame extends JFrame {
 		ButtonPanel buttonPanel = new ButtonPanel(listeners);
 
 		this.tabbedPane = new JTabbedPane();
-		this.tabbedPane.setVisible(true);
+		this.tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
 		
-		this.scrollPane = new JScrollPane(tabbedPane);
-		scrollPane
-				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		scrollPane
-				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		scrollPane.setAutoscrolls(true);
+//		this.scrollPane = new JScrollPane(tabbedPane);
+//		scrollPane
+//				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//		scrollPane
+//				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+//		scrollPane.setAutoscrolls(true);
 
 		Container contentPane = getContentPane();
 		contentPane.add(menuPanel, BorderLayout.NORTH);
@@ -109,13 +110,10 @@ public class MainFrame extends JFrame {
 		getCurrentPanel().enableEditMode();
 	}
 
-	public void repaintPanel() {
-		getCurrentPanel().repaint();
-	}
-
 	public void addTab(int id, String header) {
 		tabbedPane.addTab(header, new EditionPanel(id, controller));
 		tabbedPane.setSelectedIndex(tabbedPane.getComponentCount() - 1);
+		enableVertexMode();
 	}
 
 	public void removeTab() {

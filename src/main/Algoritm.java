@@ -58,7 +58,6 @@ public class Algoritm {
 	vertexLabels[graph.getIndexVertex(vertex)][0] = true;
 	vertexLabels[graph.getIndexVertex(vertex)][1] = flag;
 
-	controller.repaint();
 	// JOptionPane.showMessageDialog(null, "Продолжить...");
 
 	// Thread.sleep(2000);
@@ -87,7 +86,6 @@ public class Algoritm {
     }
 
     public void run() {
-	controller.repaint();
     }
     /*
      * // mainFrame.repaint(); // Thread.sleep(2000); public void reset() {

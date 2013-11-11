@@ -23,5 +23,4 @@ public class MouseMotionTempEdge implements MouseMotionListener {
 			controller.getCurrentGraph().setEndTempEdge(event.getPoint());
 		}
 	}
-
 }

@@ -22,6 +22,7 @@ public class MouseAdditionVertex extends MouseAdapter {
 					controller.addVertex(event.getPoint());
 					// controller.activateObject(event.getPoint());
 					// controller.setMotion(true);
+					controller.repaint();
 				}
 			}
 		}

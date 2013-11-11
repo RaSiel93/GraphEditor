@@ -45,7 +45,8 @@ public class MousePressingActivation extends MouseAdapter {
 		if (!controller.isStatusDragged() && !controller.isStatusSelection()) {
 			if (controller.checkPointIfEmpty(event.getPoint())
 					&& !event.isControlDown()) {
-				// controller.deactivateAllObject();
+				controller.getCurrentGraph().deactivateAll();
+				controller.repaint();
 			}
 			if (!controller.checkPointIfEmpty(event.getPoint())
 					|| event.isControlDown()) {
