@@ -8,25 +8,25 @@ public class Edge extends Line2D.Double {
 	private Vertex vertex1;
 	private Vertex vertex2;
 	private int lenght;
-	private boolean active;
+	private boolean selected;
 
 	public Edge(Vertex beginVertex, Vertex endVertex) {
 		vertex1 = beginVertex;
 		vertex2 = endVertex;
 		lenght = 1;
-		refresh();
+		selectOn();
 	}
 
-	public void activeOn() {
-		active = true;
+	public void selectOn() {
+		selected = true;
 	}
 
-	public void activeOff() {
-		active = false;
+	public void selectOff() {
+		selected = false;
 	}
 
-	public boolean isActivate() {
-		return active;
+	public boolean isSelected() {
+		return selected;
 	}
 
 	public Point getPointBeginEdge() {
@@ -79,13 +79,6 @@ public class Edge extends Line2D.Double {
 
 	public boolean isContentVertexInEdge(Vertex vertex) {
 		return (vertex1 == vertex || vertex2 == vertex);
-	}
-
-	public void revers() {
-		Vertex vertexTemp = vertex1;
-		vertex1 = vertex2;
-		vertex2 = vertexTemp;
-		setLine(getPointEndEdge(), getPointBeginEdge());
 	}
 
 	public void refresh() {

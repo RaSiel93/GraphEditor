@@ -17,10 +17,10 @@ public class MouseEditLabel extends MouseAdapter {
 	public void mouseClicked(MouseEvent event) {
 		if (event.getModifiers() == event.BUTTON1_MASK) {
 			if (event.getClickCount() == 1
-					&& controller.checkPointIfVertex(event.getPoint())) {
+					&& controller.isVertex(event.getPoint())) {
 				controller.renameVertex(event.getPoint());
 			} else if (event.getClickCount() == 1
-					&& controller.checkPointIfEdge(event.getPoint())) {
+					&& controller.isEdge(event.getPoint())) {
 				controller.resizeEdge(event.getPoint());
 			}
 		}

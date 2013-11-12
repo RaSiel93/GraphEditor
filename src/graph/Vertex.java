@@ -2,35 +2,34 @@ package graph;
 
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Point2D;
 
 public class Vertex extends Ellipse2D.Double {
 	private static final int SIDELENGTH = 20;
-	private boolean active = false;
+	private boolean selected = false;
 	private String name = "";
 
-	public Vertex(Vertex v) {
-		super(v.getX() - SIDELENGTH / 2, v.getY() - SIDELENGTH / 2, SIDELENGTH,
-				SIDELENGTH);
-	}
-
-	public Vertex(double x, double y) {
-		super(x - SIDELENGTH / 2, y - SIDELENGTH / 2, SIDELENGTH, SIDELENGTH);
-	}
-
 	public Vertex(Point point) {
-		super(point.getX() - SIDELENGTH / 2, point.getY() - SIDELENGTH / 2, SIDELENGTH, SIDELENGTH);
+		super(point.getX() - SIDELENGTH / 2, point.getY() - SIDELENGTH / 2,
+				SIDELENGTH, SIDELENGTH);
+		selectOn();
 	}
 
-	public void activeOn() {
-		active = true;
+	public Point2D getPoint() {
+		return new Point((int) getX() + SIDELENGTH / 2, (int) getY()
+				+ SIDELENGTH / 2);
 	}
 
-	public void activeOff() {
-		active = false;
+	public void selectOn() {
+		selected = true;
 	}
 
-	public boolean isActivate() {
-		return active;
+	public void selectOff() {
+		selected = false;
+	}
+
+	public boolean isSelected() {
+		return selected;
 	}
 
 	public String getName() {

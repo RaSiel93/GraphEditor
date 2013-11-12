@@ -5,28 +5,28 @@ import java.awt.event.MouseEvent;
 
 import main.Controller;
 
-public class MousePressingActivation extends MouseAdapter {
+public class MousePressingSelection extends MouseAdapter {
 	Boolean isDeactive = false;
 	Controller controller;
 
-	public MousePressingActivation(Controller controller) {
+	public MousePressingSelection(Controller controller) {
 		this.controller = controller;
 	}
 
 	public void mousePressed(MouseEvent event) {
 		if (!controller.isObject(event.getPoint()) && !event.isControlDown()) {
-			controller.getCurrentGraph().deactivateAll();
+			controller.getCurrentGraph().deselectAll();
 		} else {
-			if (controller.checkActivateObject(event.getPoint())) {
+			if (controller.checkSelectedObject(event.getPoint())) {
 				if (event.isControlDown()) {
 					isDeactive = true;
 				}
 			} else {
 				if (event.isControlDown()) {
-					controller.getCurrentGraph().activate(event.getPoint());
+					controller.getCurrentGraph().select(event.getPoint());
 				} else {
-					controller.getCurrentGraph().deactivateAll();
-					controller.getCurrentGraph().activate(event.getPoint());
+					controller.getCurrentGraph().deselectAll();
+					controller.getCurrentGraph().select(event.getPoint());
 				}
 			}
 		}
@@ -43,9 +43,9 @@ public class MousePressingActivation extends MouseAdapter {
 			if (event.isControlDown() && isDeactive) {
 				controller.getCurrentGraph().deactivate(event.getPoint());
 			}
-			if (!event.isControlDown() && controller.checkActivateObject(event.getPoint())) {
-				controller.getCurrentGraph().deactivateAll();
-				controller.getCurrentGraph().activate(event.getPoint());				
+			if (!event.isControlDown() && controller.checkSelectedObject(event.getPoint())) {
+				controller.getCurrentGraph().deselectAll();
+				controller.getCurrentGraph().select(event.getPoint());				
 			}
 			// else if (!event.isControlDown()) {
 			// controller.getCurrentGraph().deactivateAll();

@@ -13,7 +13,7 @@ public class MouseShiftObjects implements MouseMotionListener {
 	}
 
 	public void mouseDragged(MouseEvent event) {
-		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()) {
+		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown() || event.isShiftDown()) {
 			if (controller.isPassibleDragged() && controller.isObject(event.getPoint())) {
 				controller.setDragged(true);
 			}

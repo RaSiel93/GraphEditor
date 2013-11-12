@@ -1,7 +1,6 @@
 package graph;
 
 import java.awt.Point;
-import java.awt.geom.Line2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -62,6 +61,20 @@ public class Graph {
 		return this.actualEdge;
 	}
 
+	public Point getMinCoords() {
+		double minCoordX = 0;
+		double minCoordY = 0;
+		for (Vertex vertex : vertexes) {
+			if (vertex.getCenterX() < minCoordX) {
+				minCoordX = vertex.getCenterX();
+			}
+			if (vertex.getCenterY() < minCoordY) {
+				minCoordY = vertex.getCenterY();
+			}
+		}
+		return new Point((int) minCoordX, (int) minCoordY);
+	}
+
 	public Point getMaxCoords() {
 		double maxCoordX = 0;
 		double maxCoordY = 0;
@@ -113,9 +126,9 @@ public class Graph {
 	}
 
 	// EDGE
-	public void addEdge(Vertex v1, Vertex v2) {
-		if (!checkExistEdge(v1, v2)) {
-			edges.add(new Edge(v1, v2));
+	public void addEdge(Vertex vertex1, Vertex vertex2) {
+		if (!checkExistEdge(vertex1, vertex2)) {
+			edges.add(new Edge(vertex1, vertex2));
 		}
 	}
 
@@ -152,9 +165,9 @@ public class Graph {
 	}
 
 	// --------------------------------
-	private boolean checkExistEdge(Vertex v1, Vertex v2) {
+	private boolean checkExistEdge(Vertex vertex1, Vertex vertex2) {
 		for (Edge edge : edges) {
-			if (edge.getVertex1() == v1 && edge.getVertex2() == v2) {
+			if (edge.getVertex1() == vertex1 && edge.getVertex2() == vertex2) {
 				return true;
 			}
 		}
@@ -162,8 +175,7 @@ public class Graph {
 	}
 
 	// --------------------------------
-	@SuppressWarnings("unchecked")
-	public void loadFile(String path) throws ClassNotFoundException {
+	public void loadFile(String path) {
 		File file = new File(path);
 		try {
 			FileInputStream fstream = new FileInputStream(file);
@@ -174,6 +186,8 @@ public class Graph {
 			edges = (ArrayList<Edge>) file_graph.get(1);
 			fstream.close();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -199,33 +213,33 @@ public class Graph {
 		actualEdge = findEdge(point);
 	}
 
-	public void activate(Point point) {
+	public void select(Point point) {
 		if (findVertex(point) != null) {
-			findVertex(point).activeOn();
+			findVertex(point).selectOn();
 		} else if (findEdge(point) != null) {
-			findEdge(point).activeOn();
+			findEdge(point).selectOn();
 		}
 	}
 
 	public void deactivate(Point point) {
 		if (findVertex(point) != null) {
-			findVertex(point).activeOff();
+			findVertex(point).selectOff();
 		} else if (findEdge(point) != null) {
-			findEdge(point).activeOff();
+			findEdge(point).selectOff();
 		}
 	}
 
 	public int countActiveObjects() {
 		int countVertexes = 0;
 		for (Vertex vertex : getVertexes()) {
-			if (vertex.isActivate()) {
+			if (vertex.isSelected()) {
 				countVertexes++;
 			}
 		}
 
 		int countEdges = 0;
 		for (Edge edge : getEdges()) {
-			if (edge.isActivate()) {
+			if (edge.isSelected()) {
 				countEdges++;
 			}
 		}
@@ -234,40 +248,43 @@ public class Graph {
 
 	public void activateAll() {
 		for (Vertex vertex : getVertexes()) {
-			vertex.activeOn();
+			vertex.selectOn();
 		}
 		for (Edge edge : edges) {
-			edge.activeOn();
+			edge.selectOn();
 		}
 	}
 
-	public void deactivateAll() {
+	public void deselectAll() {
 		for (Vertex vertex : getVertexes()) {
-			vertex.activeOff();
+			vertex.selectOff();
 		}
 		for (Edge edge : edges) {
-			edge.activeOff();
+			edge.selectOff();
 		}
 	}
 
 	public void removeSelectedObjects() {
-		for (Vertex vertex : getVertexes()) {
-			if (vertex.isActivate()) {
+		removeTempEdge();
+
+		List<Vertex> selectionVertexes = getSelectionVertexes();		
+		for (Vertex vertex : selectionVertexes) {
+			if (vertex.isSelected()) {
 				removeVertex(vertex);
 			}
 		}
-		for (Edge edge : getEdges()) {
-			if (edge.isActivate()) {
+		
+		List<Edge> selectionEdges = getSelectionEdges();		
+		for (Edge edge : selectionEdges) {
+			if (edge.isSelected()) {
 				removeEdge(edge);
+				break;
 			}
 		}
-		removeTempEdge();
 	}
 
 	public void removeTempEdge() {
 		tempararyEdge = null;
-		// beginTempEdge = null;
-		// endTempEdge = null;
 	}
 
 	public void setBeginTempEdge(Point point) {
@@ -297,6 +314,26 @@ public class Graph {
 			return true;
 		}
 		return false;
+	}
+
+	public List<Vertex> getSelectionVertexes() {
+		List<Vertex> selectionVertexes = new ArrayList<Vertex>();
+		for (Vertex vertex : getVertexes()) {
+			if (vertex.isSelected()) {
+				selectionVertexes.add(vertex);
+			}
+		}
+		return selectionVertexes;
+	}
+
+	public List<Edge> getSelectionEdges() {
+		List<Edge> selectionEdges = new ArrayList<Edge>();
+		for (Edge edge : getEdges()) {
+			if (edge.isSelected()) {
+				selectionEdges.add(edge);
+			}
+		}
+		return selectionEdges;
 	}
 
 }

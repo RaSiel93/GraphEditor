@@ -34,6 +34,9 @@ public class ListGraphs {
 	}
 	
 	public int getIdLastGraph(){
-		return graphs.get(graphs.size() - 1).getId();
+		if(graphs.size() > 0){
+			return graphs.get(graphs.size() - 1).getId();
+		}
+		return -1;
 	}
 }

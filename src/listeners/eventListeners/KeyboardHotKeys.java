@@ -15,9 +15,9 @@ public class KeyboardHotKeys extends KeyAdapter {
 	@Override
 	public void keyPressed(KeyEvent event) {
 		if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			controller.getCurrentGraph().deactivateAll();
+			controller.getCurrentGraph().deselectAll();
 			if (controller.getCurrentGraph().checkExistsTempEdge())
-				controller.removeTempEdge();
+				controller.removeTemporaryEdge();
 		}
 		if (!controller.isDragged() && !controller.isSelection()
 				&& event.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -39,5 +39,6 @@ public class KeyboardHotKeys extends KeyAdapter {
 				controller.resizeSelectedEdges();
 			}
 		}
+		controller.repaint();
 	}
 }

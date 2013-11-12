@@ -20,8 +20,7 @@ public class MouseAdditionVertex extends MouseAdapter {
 			if (event.getClickCount() == 2 || event.isShiftDown()) {
 				if (!controller.isVertex(event.getPoint())) {
 					controller.addVertex(event.getPoint());
-					// controller.activateObject(event.getPoint());
-					// controller.setMotion(true);
+					controller.getCurrentGraph().setActualObject(event.getPoint());
 					controller.repaint();
 				}
 			}

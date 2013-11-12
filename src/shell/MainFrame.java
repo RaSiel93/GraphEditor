@@ -37,7 +37,7 @@ public class MainFrame extends JFrame {
 
 	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
-	
+
 	public MainFrame(Controller controller) {
 		setTitle("Editor Graph");
 		setSize(DEFAUT_WIDTH, DEFAUT_HEIGHT);
@@ -52,13 +52,13 @@ public class MainFrame extends JFrame {
 
 		this.tabbedPane = new JTabbedPane();
 		this.tabbedPane.setBorder(BorderFactory.createLineBorder(Color.black));
-		
-//		this.scrollPane = new JScrollPane(tabbedPane);
-//		scrollPane
-//				.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-//		scrollPane
-//				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-//		scrollPane.setAutoscrolls(true);
+
+		// this.scrollPane = new JScrollPane(tabbedPane);
+		// scrollPane
+		// .setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		// scrollPane
+		// .setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		// scrollPane.setAutoscrolls(true);
 
 		Container contentPane = getContentPane();
 		contentPane.add(menuPanel, BorderLayout.NORTH);
@@ -90,28 +90,45 @@ public class MainFrame extends JFrame {
 	}
 
 	public int getCurrentIdGraph() {
-		return getCurrentPanel().getId();
+		if (getCurrentPanel() != null) {
+			return getCurrentPanel().getId();
+		}
+		return -1;
 	}
 
 	EditionPanel getCurrentPanel() {
-		return (EditionPanel) tabbedPane.getComponent(tabbedPane
-				.getSelectedIndex());
+		if (tabbedPane.getSelectedIndex() != -1) {
+			return (EditionPanel) ((JScrollPane) tabbedPane
+					.getComponent(tabbedPane.getSelectedIndex())).getViewport()
+					.getView();
+		}
+		return null;
 	}
 
 	public void enableVertexMode() {
-		getCurrentPanel().enableVertexMode();
+		EditionPanel editionPanel = getCurrentPanel();
+		if(editionPanel != null){
+			editionPanel.enableVertexMode();
+		}
 	}
 
 	public void enableEdgeMode() {
-		getCurrentPanel().enableEdgeMode();
+		EditionPanel editionPanel = getCurrentPanel();
+		if(editionPanel != null){
+			editionPanel.enableEdgeMode();
+		}
 	}
 
 	public void enableEditLabelMode() {
-		getCurrentPanel().enableEditMode();
+		EditionPanel editionPanel = getCurrentPanel();
+		if(editionPanel != null){
+			editionPanel.enableEditMode();
+		}
 	}
 
 	public void addTab(int id, String header) {
-		tabbedPane.addTab(header, new EditionPanel(id, controller));
+		tabbedPane.addTab(header, new JScrollPane(new EditionPanel(id,
+				controller)));
 		tabbedPane.setSelectedIndex(tabbedPane.getComponentCount() - 1);
 		enableVertexMode();
 	}

@@ -5,17 +5,11 @@ import graph.Graph;
 import graph.ListGraphs;
 import graph.Vertex;
 
-import java.awt.Dimension;
 import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -26,26 +20,23 @@ public class Controller {
 	private ListGraphs listGraphs;
 	private MainFrame mainFrame;
 
-	private Algoritm algoritm;
+	// private Algoritm algoritm;
 
 	private Point pointSelectionBegin;
 	private Point pointSelectionEnd;
-	private Point pointDragged;
 
-	private boolean selection;
-	private boolean dragged;
-	private boolean algoritmFlag;
+	private Point pointShift;
+
+	private boolean selection = false;
+	private boolean dragged = false;
+
+	List<Vertex> selectionVertexes;
+	List<Edge> selectionEdges;
 
 	public Controller() {
 		listGraphs = new ListGraphs();
-
-		algoritm = new Algoritm(this);
-
-		pointSelectionBegin = new Point(0, 0);
-		pointSelectionEnd = new Point(0, 0);
-		pointDragged = new Point(0, 0);
-		dragged = false;
-		selection = false;
+		selectionVertexes = new ArrayList<Vertex>();
+		selectionEdges = new ArrayList<Edge>();
 	}
 
 	public void startActions() {
@@ -110,8 +101,7 @@ public class Controller {
 	// ----------------------------------------
 	// ----------------------------------------
 	public boolean isObject(Point point) {
-		if (getCurrentGraph().findVertex(point) != null
-				|| getCurrentGraph().findEdge(point) != null) {
+		if (isVertex(point) || isEdge(point)) {
 			return true;
 		}
 		return false;
@@ -124,29 +114,22 @@ public class Controller {
 		return false;
 	}
 
-	public boolean checkPointIfVertex(Point point) {
-		if (getCurrentGraph().findVertex(point) != null) {
-			return true;
-		}
-		return false;
-	}
-
-	public boolean checkPointIfEdge(Point point) {
+	public boolean isEdge(Point point) {
 		if (getCurrentGraph().findEdge(point) != null) {
 			return true;
 		}
 		return false;
 	}
 
-	public boolean checkActivateObject(Point point) {
+	public boolean checkSelectedObject(Point point) {
 		Graph graph = getCurrentGraph();
 		if (graph.findVertex(point) != null) {
-			if (graph.findVertex(point).isActivate()) {
+			if (graph.findVertex(point).isSelected()) {
 				return true;
 			}
 		}
 		if (graph.findEdge(point) != null) {
-			if (graph.findEdge(point).isActivate()) {
+			if (graph.findEdge(point).isSelected()) {
 				return true;
 			}
 		}
@@ -163,7 +146,7 @@ public class Controller {
 
 	public void renameSelectedVertexes() {
 		for (Vertex vertex : getCurrentGraph().getVertexes()) {
-			if (vertex.isActivate()) {
+			if (vertex.isSelected()) {
 				String name = JOptionPane.showInputDialog("Input name");
 				if (name != null) {
 					vertex.setName(name);
@@ -186,7 +169,7 @@ public class Controller {
 
 	public void resizeSelectedEdges() {
 		for (Edge edge : getCurrentGraph().getEdges()) {
-			if (edge.isActivate()) {
+			if (edge.isSelected()) {
 				String lenght = JOptionPane.showInputDialog("Input size");
 				try {
 					int size = Integer.parseInt(lenght);
@@ -208,13 +191,15 @@ public class Controller {
 	}
 
 	// ----------------------------------------
-	public void addVertex(Point p) {
-		Vertex vertex = new Vertex(p.getX(), p.getY());
+	public void addVertex(Point point) {
+		Vertex vertex = new Vertex(point);
 		getCurrentGraph().addVertex(vertex);
 	}
 
 	// ------------------------------------------
 	public void setPointSelectionBegin(Point point) {
+		selectionVertexes = getCurrentGraph().getSelectionVertexes();
+		selectionEdges = getCurrentGraph().getSelectionEdges();
 		pointSelectionBegin = point;
 	}
 
@@ -241,43 +226,55 @@ public class Controller {
 	}
 
 	public void setSelectionObjects() {
+		getCurrentGraph().deselectAll();
+		for (Vertex vertex : selectionVertexes) {
+			vertex.selectOn();
+		}
+		for (Edge edge : selectionEdges) {
+			edge.selectOn();
+		}
 		for (Vertex vertex : getCurrentGraph().getVertexes()) {
 			if (vertex.isVertexInArea(pointSelectionBegin, pointSelectionEnd)) {
-				vertex.activeOn();
+				vertex.selectOn();
 			}
 		}
 		for (Edge edge : getCurrentGraph().getEdges()) {
 			if (edge.isEdgeInArea(pointSelectionBegin, pointSelectionEnd)) {
-				edge.activeOn();
+				edge.selectOn();
 			}
 		}
 	}
 
 	// -------------------------------------
 	public void setPointDragged(Point point) {
-		pointDragged = point;
+		pointShift = point;
 	}
 
 	public void shiftObjects(Point point) {
-		double x = pointDragged.getX() - point.getX();
-		double y = pointDragged.getY() - point.getY();
+		double x = pointShift.getX() - point.getX();
+		double y = pointShift.getY() - point.getY();
+
+		List<Vertex> movedVertexes = new ArrayList<Vertex>();
 
 		for (Vertex vertex : getCurrentGraph().getVertexes()) {
-			if (vertex.isActivate()) {
+			if (vertex.isSelected()) {
 				vertex.shiftVertex(x, y);
+				movedVertexes.add(vertex);
 			}
 		}
 		for (Edge edge : getCurrentGraph().getEdges()) {
-			if (edge.isActivate()) {
-				if (!edge.getVertex1().isActivate()) {
+			if (edge.isSelected()) {
+				if (!movedVertexes.contains(edge.getVertex1())) {
 					edge.getVertex1().shiftVertex(x, y);
+					movedVertexes.add(edge.getVertex1());
 				}
-				if (!edge.getVertex2().isActivate()) {
+				if (!movedVertexes.contains(edge.getVertex2())) {
 					edge.getVertex2().shiftVertex(x, y);
+					movedVertexes.add(edge.getVertex2());
 				}
 			}
 		}
-		pointDragged = point;
+		pointShift = point;
 	}
 
 	// -------------------------------------
@@ -301,17 +298,21 @@ public class Controller {
 		int id = listGraphs.getIdLastGraph();
 		mainFrame.addTab(id, "Graph " + id);
 	}
+	
+	public void close() {
+		int id = mainFrame.getCurrentIdGraph();
+		if(id != -1){
+			listGraphs.remove(id);
+			mainFrame.removeTab();
+		}
+	}
 
 	public void open() {
 		JFileChooser fileopen = new JFileChooser();
 		fileopen.setCurrentDirectory(new File(".\\save"));
 		if (fileopen.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			try {
-				getCurrentGraph().loadFile(
-						fileopen.getSelectedFile().getAbsolutePath());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			getCurrentGraph().loadFile(
+					fileopen.getSelectedFile().getAbsolutePath());
 		}
 	}
 
@@ -328,11 +329,6 @@ public class Controller {
 		}
 	}
 
-	public void close() {
-		listGraphs.remove(mainFrame.getCurrentIdGraph());
-		mainFrame.removeTab();
-	}
-
 	public void exit() {
 		System.exit(0);
 	}
@@ -345,7 +341,7 @@ public class Controller {
 		getCurrentGraph().activateAll();
 	}
 
-	public void removeTempEdge() {
+	public void removeTemporaryEdge() {
 		getCurrentGraph().removeTempEdge();
 	}
 

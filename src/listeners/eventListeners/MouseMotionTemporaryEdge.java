@@ -15,12 +15,14 @@ public class MouseMotionTemporaryEdge implements MouseMotionListener {
 	public void mouseDragged(MouseEvent event) {
 		if (controller.getCurrentGraph().checkExistsTempEdge()) {
 			controller.getCurrentGraph().setEndTempEdge(event.getPoint());
+			controller.repaint();
 		}
 	}
 
 	public void mouseMoved(MouseEvent event) {
 		if (controller.getCurrentGraph().checkExistsTempEdge()) {
 			controller.getCurrentGraph().setEndTempEdge(event.getPoint());
+			controller.repaint();
 		}
 	}
 }
