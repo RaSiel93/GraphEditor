@@ -20,11 +20,11 @@ import javax.swing.JPanel;
 import listeners.eventListeners.KeyboardHotKeys;
 import listeners.eventListeners.MouseAdditionEdge;
 import listeners.eventListeners.MouseAdditionVertex;
-import listeners.eventListeners.MouseDragObjects;
+import listeners.eventListeners.MouseShiftObjects;
 import listeners.eventListeners.MouseDrawClicked;
 import listeners.eventListeners.MouseDrawMotion;
 import listeners.eventListeners.MouseEditLabel;
-import listeners.eventListeners.MouseMotionTempEdge;
+import listeners.eventListeners.MouseMotionTemporaryEdge;
 import listeners.eventListeners.MousePressingActivation;
 import listeners.eventListeners.MouseRegionalSelection;
 import listeners.eventListeners.MouseTemporarySelection;
@@ -58,8 +58,8 @@ public class EditionPanel extends JPanel {
 		addMouseListener(new MousePressingActivation(controller));
 		addMouseMotionListener(new MouseDrawClicked(controller));
 		addMouseMotionListener(new MouseDrawMotion(controller));
-		addMouseMotionListener(new MouseDragObjects(controller));
-		addMouseMotionListener(new MouseMotionTempEdge(controller));
+		addMouseMotionListener(new MouseShiftObjects(controller));
+		addMouseMotionListener(new MouseMotionTemporaryEdge(controller));
 		addMouseMotionListener(new MouseTemporarySelection(controller));
 		addMouseMotionListener(new MouseRegionalSelection(controller));
 	}

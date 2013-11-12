@@ -22,7 +22,7 @@ public class MouseAdditionEdge extends MouseAdapter {
 					controller.getCurrentGraph().setBeginTempEdge(event.getPoint());
 				} else {
 					if (controller.getCurrentGraph().checkPossibilityEdge(event.getPoint())) {
-						controller.getCurrentGraph().addEdge(controller.getCurrentGraph().getTempEdge());
+						controller.getCurrentGraph().addTemporaryEdgeInGraph(event.getPoint());
 						controller.removeTempEdge();
 					}
 					if (event.isShiftDown()) {
@@ -35,6 +35,7 @@ public class MouseAdditionEdge extends MouseAdapter {
 			controller.removeTempEdge();
 			controller.getCurrentGraph().deactivateAll();
 		}
+		controller.repaint();
 	}
-
+	///relise for passible create edge dragabble
 }

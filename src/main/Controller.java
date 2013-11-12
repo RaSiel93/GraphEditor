@@ -70,7 +70,8 @@ public class Controller {
 	}
 
 	public boolean isPassibleDragged() {
-		if (!isSelection() && !getCurrentGraph().checkExistsTempEdge()) {
+		if (!isSelection() && !isDragged()
+				&& !getCurrentGraph().checkExistsTempEdge()) {
 			return true;
 		}
 		return false;
@@ -85,7 +86,8 @@ public class Controller {
 	}
 
 	public boolean isPassibleSelection() {
-		if (!isDragged() && !getCurrentGraph().checkExistsTempEdge()) {
+		if (!isSelection() && !isDragged()
+				&& !getCurrentGraph().checkExistsTempEdge()) {
 			return true;
 		}
 		return false;
@@ -136,7 +138,7 @@ public class Controller {
 		return false;
 	}
 
-	public boolean checkIfActive(Point point) {
+	public boolean checkActivateObject(Point point) {
 		Graph graph = getCurrentGraph();
 		if (graph.findVertex(point) != null) {
 			if (graph.findVertex(point).isActivate()) {
@@ -240,13 +242,11 @@ public class Controller {
 
 	public void setSelectionObjects() {
 		for (Vertex vertex : getCurrentGraph().getVertexes()) {
-			vertex.activeOff();
 			if (vertex.isVertexInArea(pointSelectionBegin, pointSelectionEnd)) {
 				vertex.activeOn();
 			}
 		}
 		for (Edge edge : getCurrentGraph().getEdges()) {
-			edge.activeOff();
 			if (edge.isEdgeInArea(pointSelectionBegin, pointSelectionEnd)) {
 				edge.activeOn();
 			}
@@ -269,8 +269,12 @@ public class Controller {
 		}
 		for (Edge edge : getCurrentGraph().getEdges()) {
 			if (edge.isActivate()) {
-				edge.getVertex1().shiftVertex(x, y);
-				edge.getVertex2().shiftVertex(x, y);
+				if (!edge.getVertex1().isActivate()) {
+					edge.getVertex1().shiftVertex(x, y);
+				}
+				if (!edge.getVertex2().isActivate()) {
+					edge.getVertex2().shiftVertex(x, y);
+				}
 			}
 		}
 		pointDragged = point;

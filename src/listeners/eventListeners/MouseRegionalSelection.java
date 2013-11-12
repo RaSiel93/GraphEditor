@@ -14,7 +14,7 @@ public class MouseRegionalSelection implements MouseMotionListener {
 	}
 
 	public void mouseDragged(MouseEvent event) {
-		if (event.getModifiers() == event.BUTTON1_MASK) {
+		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()) {
 			if (controller.isPassibleSelection() && !controller.isObject(event.getPoint())) {
 				controller.setSelection(true);
 				controller.setPointSelectionBegin(event.getPoint());

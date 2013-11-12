@@ -5,15 +5,15 @@ import java.awt.event.MouseMotionListener;
 
 import main.Controller;
 
-public class MouseDragObjects implements MouseMotionListener {
+public class MouseShiftObjects implements MouseMotionListener {
 	Controller controller;
 
-	public MouseDragObjects(Controller controller) {
+	public MouseShiftObjects(Controller controller) {
 		this.controller = controller;
 	}
 
 	public void mouseDragged(MouseEvent event) {
-		if (event.getModifiers() == event.BUTTON1_MASK) {
+		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()) {
 			if (controller.isPassibleDragged() && controller.isObject(event.getPoint())) {
 				controller.setDragged(true);
 			}

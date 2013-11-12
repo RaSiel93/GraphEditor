@@ -5,10 +5,10 @@ import java.awt.event.MouseMotionListener;
 
 import main.Controller;
 
-public class MouseMotionTempEdge implements MouseMotionListener {
+public class MouseMotionTemporaryEdge implements MouseMotionListener {
 	Controller controller;
 
-	public MouseMotionTempEdge(Controller controller) {
+	public MouseMotionTemporaryEdge(Controller controller) {
 		this.controller = controller;
 	}
 

@@ -13,10 +13,10 @@ import java.util.List;
 
 public class Graph {
 	int SELECTION_OFFSET = 8;
-	
+
 	static int mainId = 0;
 	int id;
-	
+
 	private List<Vertex> vertexes;
 	private List<Edge> edges;
 
@@ -53,12 +53,12 @@ public class Graph {
 	public List<Edge> getEdges() {
 		return edges;
 	}
-	
-	public Vertex getActualVertex(){
+
+	public Vertex getActualVertex() {
 		return this.actualVertex;
 	}
-	
-	public Edge getActualEdge(){
+
+	public Edge getActualEdge() {
 		return this.actualEdge;
 	}
 
@@ -119,8 +119,10 @@ public class Graph {
 		}
 	}
 
-	public void addEdge(Edge edge) {
-		edges.add(edge);
+	public void addTemporaryEdgeInGraph(Point point) {
+		Vertex vertex1 = tempararyEdge.getVertex1();
+		Vertex vertex2 = findVertex(point);
+		addEdge(vertex1, vertex2);
 	}
 
 	public Edge getEdge(int numEdge) {
@@ -289,11 +291,12 @@ public class Graph {
 		return tempararyEdge;
 	}
 
-	public boolean checkPossibilityEdge(Point p) {
-		if (findVertex(p) != tempararyEdge.getVertex1()
-				&& findVertex(p) != null) {
+	public boolean checkPossibilityEdge(Point point) {
+		if (findVertex(point) != tempararyEdge.getVertex1()
+				&& findVertex(point) != null) {
 			return true;
 		}
 		return false;
 	}
+
 }
