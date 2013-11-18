@@ -1,4 +1,4 @@
-package graph;
+package editorGraph.graph;
 
 import java.awt.Point;
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package main;
+package editorGraph.controller;
 
-import graph.Edge;
-import graph.Graph;
-import graph.Vertex;
+import editorGraph.graph.Edge;
+import editorGraph.graph.Graph;
+import editorGraph.graph.Vertex;
 
 import javax.swing.JOptionPane;
 

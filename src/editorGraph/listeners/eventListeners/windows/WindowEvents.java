@@ -1,4 +1,4 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners.windows;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;

@@ -1,7 +1,19 @@
-package shell;
+package editorGraph.shell;
 
-import graph.Edge;
-import graph.Vertex;
+import editorGraph.controller.Controller;
+import editorGraph.graph.Edge;
+import editorGraph.graph.Vertex;
+import editorGraph.listeners.eventListeners.MouseDrawClicked;
+import editorGraph.listeners.eventListeners.MouseDrawMotion;
+import editorGraph.listeners.eventListeners.MouseMotionTemporaryEdge;
+import editorGraph.listeners.eventListeners.MousePressingSelection;
+import editorGraph.listeners.eventListeners.MouseRegionalSelection;
+import editorGraph.listeners.eventListeners.MouseShiftObjects;
+import editorGraph.listeners.eventListeners.MouseTemporarySelection;
+import editorGraph.listeners.eventListeners.modes.MouseAdditionEdge;
+import editorGraph.listeners.eventListeners.modes.MouseAdditionVertex;
+import editorGraph.listeners.eventListeners.modes.MouseEditLabel;
+import editorGraph.listeners.eventListeners.windows.KeyboardHotKeys;
 
 import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
@@ -16,19 +28,6 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
 
 import javax.swing.JPanel;
-
-import listeners.eventListeners.KeyboardHotKeys;
-import listeners.eventListeners.MouseAdditionEdge;
-import listeners.eventListeners.MouseAdditionVertex;
-import listeners.eventListeners.MouseShiftObjects;
-import listeners.eventListeners.MouseDrawClicked;
-import listeners.eventListeners.MouseDrawMotion;
-import listeners.eventListeners.MouseEditLabel;
-import listeners.eventListeners.MouseMotionTemporaryEdge;
-import listeners.eventListeners.MousePressingSelection;
-import listeners.eventListeners.MouseRegionalSelection;
-import listeners.eventListeners.MouseTemporarySelection;
-import main.Controller;
 
 public class EditionPanel extends JPanel {
 
@@ -56,8 +55,8 @@ public class EditionPanel extends JPanel {
 
 		addKeyListener(new KeyboardHotKeys(controller));
 		addMouseListener(new MousePressingSelection(controller));
-		addMouseMotionListener(new MouseDrawClicked(controller));
-		addMouseMotionListener(new MouseDrawMotion(controller));
+//		addMouseMotionListener(new MouseDrawClicked(controller));
+//		addMouseMotionListener(new MouseDrawMotion(controller));
 		addMouseMotionListener(new MouseShiftObjects(controller));
 		addMouseMotionListener(new MouseMotionTemporaryEdge(controller));
 		addMouseMotionListener(new MouseTemporarySelection(controller));

@@ -1,10 +1,10 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners.modes;
 
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class MouseAdditionVertex extends MouseAdapter {
 	Controller controller;

@@ -1,4 +1,4 @@
-package graph;
+package editorGraph.graph;
 
 import java.awt.Point;
 import java.awt.geom.Ellipse2D;
@@ -48,7 +48,7 @@ public class Vertex extends Ellipse2D.Double {
 		return this.getY() + SIDELENGTH / 2;
 	}
 
-	public void shiftVertex(double x, double y) {
+	public void shift(double x, double y) {
 		setFrame(getX() - x, getY() - y, SIDELENGTH, SIDELENGTH);
 	}
 

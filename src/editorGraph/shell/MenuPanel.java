@@ -1,4 +1,4 @@
-package shell;
+package editorGraph.shell;
 
 import static java.awt.event.InputEvent.CTRL_DOWN_MASK;
 import static java.awt.event.InputEvent.SHIFT_DOWN_MASK;

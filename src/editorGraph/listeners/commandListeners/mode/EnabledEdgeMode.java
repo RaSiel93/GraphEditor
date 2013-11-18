@@ -1,11 +1,10 @@
-package listeners.commandListeners.mode;
+package editorGraph.listeners.commandListeners.mode;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import shell.MainFrame;
-
-import main.Controller;
+import editorGraph.controller.Controller;
+import editorGraph.shell.MainFrame;
 
 public class EnabledEdgeMode implements ActionListener {
 	MainFrame mainFrame;

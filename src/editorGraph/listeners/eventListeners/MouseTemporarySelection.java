@@ -1,9 +1,9 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class MouseTemporarySelection implements MouseMotionListener {
 	Controller controller;

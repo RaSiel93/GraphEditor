@@ -1,4 +1,4 @@
-package shell;
+package editorGraph.shell;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,21 +12,21 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 
-import listeners.commandListeners.RemoveSelectedObjects;
-import listeners.commandListeners.SelectAllObjects;
-import listeners.commandListeners.algoritm.AlgoritmRun;
-import listeners.commandListeners.algoritm.AlgoritmStep;
-import listeners.commandListeners.algoritm.AlgoritmStop;
-import listeners.commandListeners.main.Close;
-import listeners.commandListeners.main.Create;
-import listeners.commandListeners.main.Exit;
-import listeners.commandListeners.main.Open;
-import listeners.commandListeners.main.Save;
-import listeners.commandListeners.mode.EnabledEdgeMode;
-import listeners.commandListeners.mode.EnabledEditLabelMode;
-import listeners.commandListeners.mode.EnabledVertexMode;
-import listeners.eventListeners.WindowEvents;
-import main.Controller;
+import editorGraph.controller.Controller;
+import editorGraph.listeners.commandListeners.RemoveSelectedObjects;
+import editorGraph.listeners.commandListeners.SelectAllObjects;
+import editorGraph.listeners.commandListeners.algoritm.AlgoritmRun;
+import editorGraph.listeners.commandListeners.algoritm.AlgoritmStep;
+import editorGraph.listeners.commandListeners.algoritm.AlgoritmStop;
+import editorGraph.listeners.commandListeners.main.Close;
+import editorGraph.listeners.commandListeners.main.Create;
+import editorGraph.listeners.commandListeners.main.Exit;
+import editorGraph.listeners.commandListeners.main.Open;
+import editorGraph.listeners.commandListeners.main.Save;
+import editorGraph.listeners.commandListeners.mode.EnabledEdgeMode;
+import editorGraph.listeners.commandListeners.mode.EnabledEditLabelMode;
+import editorGraph.listeners.commandListeners.mode.EnabledVertexMode;
+import editorGraph.listeners.eventListeners.windows.WindowEvents;
 
 public class MainFrame extends JFrame {
 	private static final int DEFAUT_WIDTH = 800;

@@ -1,9 +1,10 @@
-package main;
+package editorGraph.controller;
 
-import graph.Edge;
-import graph.Graph;
-import graph.ListGraphs;
-import graph.Vertex;
+import editorGraph.graph.Edge;
+import editorGraph.graph.Graph;
+import editorGraph.graph.ListGraphs;
+import editorGraph.graph.Vertex;
+import editorGraph.shell.MainFrame;
 
 import java.awt.Point;
 import java.awt.geom.Rectangle2D;
@@ -13,8 +14,6 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
-import shell.MainFrame;
 
 public class Controller {
 	private ListGraphs listGraphs;
@@ -250,30 +249,23 @@ public class Controller {
 		pointShift = point;
 	}
 
-	public void shiftObjects(Point point) {
+	public void shiftObjects(List<Vertex> vertexes, Point point) {
 		double x = pointShift.getX() - point.getX();
 		double y = pointShift.getY() - point.getY();
 
-		List<Vertex> movedVertexes = new ArrayList<Vertex>();
+		for (Edge edge : getCurrentGraph().getSelectionEdges()) {
+			if (!vertexes.contains(edge.getVertex1())) {
+				vertexes.add(edge.getVertex1());
+			}
+			if (!vertexes.contains(edge.getVertex2())) {
+				vertexes.add(edge.getVertex2());
+			}
+		}
+		
+		for (Vertex vertex : vertexes) {
+			vertex.shift(x, y);
+		}
 
-		for (Vertex vertex : getCurrentGraph().getVertexes()) {
-			if (vertex.isSelected()) {
-				vertex.shiftVertex(x, y);
-				movedVertexes.add(vertex);
-			}
-		}
-		for (Edge edge : getCurrentGraph().getEdges()) {
-			if (edge.isSelected()) {
-				if (!movedVertexes.contains(edge.getVertex1())) {
-					edge.getVertex1().shiftVertex(x, y);
-					movedVertexes.add(edge.getVertex1());
-				}
-				if (!movedVertexes.contains(edge.getVertex2())) {
-					edge.getVertex2().shiftVertex(x, y);
-					movedVertexes.add(edge.getVertex2());
-				}
-			}
-		}
 		pointShift = point;
 	}
 
@@ -298,10 +290,10 @@ public class Controller {
 		int id = listGraphs.getIdLastGraph();
 		mainFrame.addTab(id, "Graph " + id);
 	}
-	
+
 	public void close() {
 		int id = mainFrame.getCurrentIdGraph();
-		if(id != -1){
+		if (id != -1) {
 			listGraphs.remove(id);
 			mainFrame.removeTab();
 		}

@@ -1,10 +1,10 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import shell.MainFrame;
-import main.Controller;
+import editorGraph.controller.Controller;
+import editorGraph.shell.MainFrame;
 
 public class MouseRegionalSelection implements MouseMotionListener {
 	Controller controller;

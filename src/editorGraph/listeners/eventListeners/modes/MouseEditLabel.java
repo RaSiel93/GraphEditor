@@ -1,11 +1,11 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners.modes;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseMotionListener;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class MouseEditLabel extends MouseAdapter {
 	Controller controller;

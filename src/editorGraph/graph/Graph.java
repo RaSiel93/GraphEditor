@@ -1,4 +1,4 @@
-package graph;
+package editorGraph.graph;
 
 import java.awt.Point;
 import java.io.File;
@@ -100,12 +100,20 @@ public class Graph {
 	}
 
 	public void removeVertex(Vertex vertex) {
-		for (Edge edge : edges) {
+		removeEdgesInVertex(vertex);
+		vertexes.remove(vertex);
+	}
+
+	private void removeEdgesInVertex(Vertex vertex) {
+		List<Edge> removedEdges = new ArrayList<Edge>();
+		for (Edge edge : this.edges) {
 			if (edge.isContentVertexInEdge(vertex)) {
-				edges.remove(edge);
+				removedEdges.add(edge);
 			}
 		}
-		vertexes.remove(vertex);
+		for (Edge edge : removedEdges) {
+			removeEdge(edge);
+		}
 	}
 
 	public int countVertexes() {
@@ -267,18 +275,17 @@ public class Graph {
 	public void removeSelectedObjects() {
 		removeTempEdge();
 
-		List<Vertex> selectionVertexes = getSelectionVertexes();		
+		List<Vertex> selectionVertexes = getSelectionVertexes();
 		for (Vertex vertex : selectionVertexes) {
 			if (vertex.isSelected()) {
 				removeVertex(vertex);
 			}
 		}
-		
-		List<Edge> selectionEdges = getSelectionEdges();		
+
+		List<Edge> selectionEdges = getSelectionEdges();
 		for (Edge edge : selectionEdges) {
 			if (edge.isSelected()) {
 				removeEdge(edge);
-				break;
 			}
 		}
 	}

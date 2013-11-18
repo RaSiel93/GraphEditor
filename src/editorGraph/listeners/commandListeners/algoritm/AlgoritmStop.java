@@ -1,9 +1,9 @@
-package listeners.commandListeners.algoritm;
+package editorGraph.listeners.commandListeners.algoritm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class AlgoritmStop implements ActionListener {
 

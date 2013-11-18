@@ -1,4 +1,7 @@
-/shell
-/main
-/listeners
 /graph
+/listeners
+/main
+/shell
+/controller
+/editorGraph
+/eventMode

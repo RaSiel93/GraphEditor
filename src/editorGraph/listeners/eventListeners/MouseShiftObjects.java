@@ -1,9 +1,9 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class MouseShiftObjects implements MouseMotionListener {
 	Controller controller;
@@ -13,12 +13,14 @@ public class MouseShiftObjects implements MouseMotionListener {
 	}
 
 	public void mouseDragged(MouseEvent event) {
-		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown() || event.isShiftDown()) {
-			if (controller.isPassibleDragged() && controller.isObject(event.getPoint())) {
+		if (event.getModifiers() == event.BUTTON1_MASK || event.isControlDown()
+				|| event.isShiftDown()) {
+			if (controller.isPassibleDragged()
+					&& controller.isObject(event.getPoint())) {
 				controller.setDragged(true);
 			}
 			if (controller.isDragged()) {
-				controller.shiftObjects(event.getPoint());
+				controller.shiftObjects(controller.getCurrentGraph().getSelectionVertexes(), event.getPoint());
 			}
 			controller.repaint();
 		}

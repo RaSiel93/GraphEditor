@@ -1,6 +1,7 @@
-package main;
+package editorGraph;
 
-import shell.MainFrame;
+import editorGraph.controller.Controller;
+import editorGraph.shell.MainFrame;
 
 public class EditorGraphs {
 	public static void main(String[] args) throws NoSuchMethodException, SecurityException{

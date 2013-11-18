@@ -1,9 +1,9 @@
-package listeners.eventListeners;
+package editorGraph.listeners.eventListeners.windows;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class KeyboardHotKeys extends KeyAdapter {
 	Controller controller;	
@@ -14,11 +14,10 @@ public class KeyboardHotKeys extends KeyAdapter {
 
 	@Override
 	public void keyPressed(KeyEvent event) {
-		if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			controller.getCurrentGraph().deselectAll();
-			if (controller.getCurrentGraph().checkExistsTempEdge())
-				controller.removeTemporaryEdge();
-		}
+//		if (event.getKeyCode() == KeyEvent.VK_ESCAPE) {
+//			controller.getCurrentGraph().deselectAll();
+//			controller.removeTemporaryEdge();
+//		}
 		if (!controller.isDragged() && !controller.isSelection()
 				&& event.getKeyCode() == KeyEvent.VK_DELETE) {
 			controller.removeSelectedObjects();

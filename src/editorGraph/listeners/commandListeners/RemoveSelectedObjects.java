@@ -1,9 +1,9 @@
-package listeners.commandListeners;
+package editorGraph.listeners.commandListeners;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import main.Controller;
+import editorGraph.controller.Controller;
 
 public class RemoveSelectedObjects implements ActionListener {
 	Controller controller;
@@ -15,5 +15,6 @@ public class RemoveSelectedObjects implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		controller.removeSelectedObjects();
+		controller.repaint();
 	}
 }

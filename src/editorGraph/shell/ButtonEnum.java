@@ -1,4 +1,4 @@
-package shell;
+package editorGraph.shell;
 
 public enum ButtonEnum {
 	VERTEX("Вершина", "VERTEX_MODE"), EDGE("Дуга", "EDGE_MODE"), EDIT(

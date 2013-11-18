@@ -1,4 +1,4 @@
-package shell;
+package editorGraph.shell;
 
 import java.awt.Dimension;
 import java.awt.Insets;

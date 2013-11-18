@@ -1,4 +1,4 @@
-package shell;
+package editorGraph.shell;
 
 import java.awt.event.ActionListener;
 import java.util.Map;
