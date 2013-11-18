@@ -111,14 +111,16 @@ public class Algoritm {
 	private boolean findHamiltonianCycle(Vertex startingVertex,
 			Vertex currentVertex) {
 		currentVertex.selectOn();
-		if (graph.isSelectAllVertexes() && startingVertex == currentVertex) {
+		Edge commonEdge = graph.getCommonEdge(currentVertex, startingVertex);
+		if (graph.isSelectAllVertexes() && commonEdge != null) {
+			commonEdge.selectOn();
 			return true;
 		} else {
 			List<Edge> edges = graph.getAdjacentEdges(currentVertex);
 			for (Edge edge : edges) {
 				if (!edge.isSelected()) {
 					edge.selectOn();
-					if (findHamiltonianCycle(startingVertex, edge.getVertex2())) {
+					if (!edge.getVertex2().isSelected() && findHamiltonianCycle(startingVertex, edge.getVertex2())) {
 						return true;
 					} else {
 						edge.selectOff();

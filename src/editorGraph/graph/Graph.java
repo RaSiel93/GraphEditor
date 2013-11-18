@@ -360,4 +360,13 @@ public class Graph {
 	public boolean isSelectAllVertexes() {
 		return countVertexes() == getSelectionVertexes().size();
 	}
+
+	public Edge getCommonEdge(Vertex vertex1, Vertex vertex2) {
+		for (Edge edge : getEdges()) {
+			if (edge.getVertex1() == vertex1 && edge.getVertex2() == vertex2) {
+				return edge;
+			}
+		}
+		return null;
+	}
 }

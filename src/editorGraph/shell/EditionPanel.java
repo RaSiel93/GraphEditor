@@ -31,9 +31,15 @@ import javax.swing.JPanel;
 public class EditionPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private int ARROW_LEN = 5;
-	private double ARROW_ANGLE = 0.7;
+	private final int ARROW_LEN = 5;
+	private final double ARROW_ANGLE = 0.7;
 
+	private final int WIDTH_SELECTION_VERTEX = 10;
+	private final int WIDTH_SELECTION_EDGES = 6;
+	private final int WIDTH_VERTEX = 3;
+	private final int WIDTH_EDGE = 2;
+	
+	
 	private Controller controller;
 	int idGraph;
 
@@ -112,7 +118,7 @@ public class EditionPanel extends JPanel {
 		edge.refresh();
 
 		g.setColor(selectionColor(edge));
-		g.setStroke(new BasicStroke(4.0f));
+		g.setStroke(new BasicStroke(WIDTH_SELECTION_EDGES));
 		g.draw(edge);
 
 		printArrow(g, edge.getPointEndEdge(), edge.getAngle(), g.getColor());
@@ -122,7 +128,7 @@ public class EditionPanel extends JPanel {
 				edge.getLenght());
 
 		g.setColor(Color.black);
-		g.setStroke(new BasicStroke(2.0f));
+		g.setStroke(new BasicStroke(WIDTH_EDGE));
 		g.draw(edge);
 	}
 
@@ -136,12 +142,12 @@ public class EditionPanel extends JPanel {
 				point.getY() - ARROW_LEN * Math.sin(angle - ARROW_ANGLE));
 
 		g.setColor(color);
-		g.setStroke(new BasicStroke(4.0f));
+		g.setStroke(new BasicStroke(WIDTH_SELECTION_EDGES));
 		g.draw(line1);
 		g.draw(line2);
 
 		g.setColor(Color.black);
-		g.setStroke(new BasicStroke(2.0f));
+		g.setStroke(new BasicStroke(WIDTH_EDGE));
 		g.draw(line1);
 		g.draw(line2);
 	}
@@ -163,11 +169,11 @@ public class EditionPanel extends JPanel {
 
 	private void printVertex(Graphics2D g, Vertex vertex) {
 		g.setColor(selectionColor(vertex));
-		g.setStroke(new BasicStroke(10.0f));
+		g.setStroke(new BasicStroke(WIDTH_SELECTION_VERTEX));
 		g.draw(vertex);
 
 		g.setColor(Color.black);
-		g.setStroke(new BasicStroke(4.0f));
+		g.setStroke(new BasicStroke(WIDTH_VERTEX));
 		g.draw(vertex);
 
 		g.setColor(Color.red);
