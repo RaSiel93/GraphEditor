@@ -25,7 +25,7 @@ public class KeyboardHotKeys extends KeyAdapter {
 		if (!controller.isDragged() && !controller.isSelection()
 				|| event.isControlDown()) {
 			if (event.getKeyCode() == KeyEvent.VK_A && event.isControlDown()) {
-				controller.activateAll();
+				controller.selectAll();
 			}
 			if (event.getKeyCode() == KeyEvent.VK_S && event.isControlDown()) {
 				controller.save();

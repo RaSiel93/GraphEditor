@@ -5,16 +5,16 @@ import java.awt.event.ActionListener;
 
 import editorGraph.controller.Controller;
 
-public class SelectAllObjects implements ActionListener {
+public class SelectInvert implements ActionListener {
 	Controller controller;
 	
-	public SelectAllObjects(Controller controller) {
+	public SelectInvert(Controller controller) {
 		this.controller = controller;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.selectAll();
+		controller.invertSelection();
 		controller.repaint();
 	}
 }

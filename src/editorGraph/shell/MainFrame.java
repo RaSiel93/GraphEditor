@@ -15,6 +15,7 @@ import javax.swing.JTabbedPane;
 import editorGraph.controller.Controller;
 import editorGraph.listeners.commandListeners.RemoveSelectedObjects;
 import editorGraph.listeners.commandListeners.SelectAllObjects;
+import editorGraph.listeners.commandListeners.SelectInvert;
 import editorGraph.listeners.commandListeners.algoritm.AlgoritmRun;
 import editorGraph.listeners.commandListeners.main.Close;
 import editorGraph.listeners.commandListeners.main.Create;
@@ -79,6 +80,7 @@ public class MainFrame extends JFrame {
 		listeners.put("SAVE", new Save(controller));
 		listeners.put("EXIT", new Exit(controller));
 		listeners.put("SELECT_ALL", new SelectAllObjects(controller));
+		listeners.put("SELECT_INVERT", new SelectInvert(controller));
 		listeners.put("REMOVE", new RemoveSelectedObjects(controller));
 		listeners.put("ALGO_RUN", new AlgoritmRun(controller));
 		// listeners.put("STEP_ALGO", new AlgoritmStep(controller));

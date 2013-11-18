@@ -332,7 +332,7 @@ public class Controller {
 		getCurrentGraph().removeSelectedObjects();
 	}
 
-	public void activateAll() {
+	public void selectAll() {
 		getCurrentGraph().activateAll();
 	}
 
@@ -351,5 +351,23 @@ public class Controller {
 
 	public Algoritm getAlgoritm() {
 		return algoritm;
+	}
+
+	public void invertSelection() {
+		Graph graph = getCurrentGraph();
+		for(Vertex vertex : graph.getVertexes()){
+			if(vertex.isSelected()){
+				vertex.selectOff();
+			} else {
+				vertex.selectOn();
+			}
+		}
+		for(Edge edge : graph.getEdges()){
+			if(edge.isSelected()){
+				edge.selectOff();
+			} else {
+				edge.selectOn();
+			}
+		}
 	}
 }

@@ -65,13 +65,19 @@ public class MenuPanel extends JMenuBar {
 		removeItem
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
 
-		JMenuItem selectAllItem = new JMenuItem("Выделить все");
-		selectAllItem.addActionListener(listeners.get("SELECT_ALL"));
-		selectAllItem.setAccelerator(KeyStroke
+		JMenuItem selectAll = new JMenuItem("Выделить все");
+		selectAll.addActionListener(listeners.get("SELECT_ALL"));
+		selectAll.setAccelerator(KeyStroke
 				.getKeyStroke('A', CTRL_DOWN_MASK));
+		
+		JMenuItem invertSelection = new JMenuItem("Инвентировать выделение");
+		invertSelection.addActionListener(listeners.get("SELECT_INVERT"));
+		invertSelection.setAccelerator(KeyStroke
+				.getKeyStroke('I', CTRL_DOWN_MASK));
 
 		editMenu.add(removeItem);
-		editMenu.add(selectAllItem);
+		editMenu.add(selectAll);
+		editMenu.add(invertSelection);
 		add(editMenu);
 		// -----------------------------------
 		JMenu algoMenu = new JMenu("Алгоритм");
