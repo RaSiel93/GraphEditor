@@ -11,7 +11,7 @@ public class EditorGraphs {
 		MainFrame mainFrame = new MainFrame(controller);
 		
 		controller.setView(mainFrame);
-		controller.startActions();
+//		controller.startActions();
 	}
 	
 	private static void initialize(){

@@ -19,7 +19,7 @@ public class Controller {
 	private ListGraphs listGraphs;
 	private MainFrame mainFrame;
 
-	// private Algoritm algoritm;
+	private Algoritm algoritm;
 
 	private Point pointSelectionBegin;
 	private Point pointSelectionEnd;
@@ -36,6 +36,8 @@ public class Controller {
 		listGraphs = new ListGraphs();
 		selectionVertexes = new ArrayList<Vertex>();
 		selectionEdges = new ArrayList<Edge>();
+		
+		algoritm = new Algoritm(this);
 	}
 
 	public void startActions() {
@@ -303,6 +305,7 @@ public class Controller {
 		JFileChooser fileopen = new JFileChooser();
 		fileopen.setCurrentDirectory(new File(".\\save"));
 		if (fileopen.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			create();
 			getCurrentGraph().loadFile(
 					fileopen.getSelectedFile().getAbsolutePath());
 		}
@@ -339,5 +342,14 @@ public class Controller {
 
 	public void repaint() {
 		mainFrame.repaint();
+	}
+	
+	//ALGORITM
+	public void runAlgoritm(){
+		algoritm.run(getCurrentGraph());
+	}
+
+	public Algoritm getAlgoritm() {
+		return algoritm;
 	}
 }

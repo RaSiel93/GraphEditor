@@ -75,21 +75,15 @@ public class MenuPanel extends JMenuBar {
 		add(editMenu);
 		// -----------------------------------
 		JMenu algoMenu = new JMenu("Алгоритм");
-		JMenuItem runAlgo = new JMenuItem("Запустить");
-		runAlgo.addActionListener(listeners.get("RUN_ALGO"));
-		runAlgo.setAccelerator(KeyStroke.getKeyStroke('R', CTRL_DOWN_MASK));
-		JMenuItem stepAlgo = new JMenuItem("Продолжить..");
-		stepAlgo.setEnabled(false);
-		stepAlgo.addActionListener(listeners.get("STEP_ALGO"));
-		stepAlgo.setAccelerator(KeyStroke.getKeyStroke('W', CTRL_DOWN_MASK));
-		JMenuItem breakAlgo = new JMenuItem("Прервать");
-		breakAlgo.addActionListener(listeners.get("BREAK_ALGO"));
-		breakAlgo.setAccelerator(KeyStroke.getKeyStroke('T', CTRL_DOWN_MASK));
-		breakAlgo.setEnabled(false);
+		JMenuItem algoRun = new JMenuItem("Запустить");
+		algoRun.addActionListener(listeners.get("ALGO_RUN"));
+		algoRun.setAccelerator(KeyStroke.getKeyStroke('R', CTRL_DOWN_MASK));
+		JMenuItem algoOptions = new JMenuItem("Опции..");
+		algoOptions.addActionListener(listeners.get("ALGO_OPTION"));
+		algoOptions.setAccelerator(KeyStroke.getKeyStroke('O', CTRL_DOWN_MASK));
 
-		algoMenu.add(runAlgo);
-		algoMenu.add(stepAlgo);
-		algoMenu.add(breakAlgo);
+		algoMenu.add(algoRun);
+//		algoMenu.add(algoOptions);
 		add(algoMenu);
 	}
 }

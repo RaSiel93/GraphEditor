@@ -96,7 +96,11 @@ public class Graph {
 	}
 
 	public Vertex getVertex(int numVertex) {
-		return vertexes.get(numVertex);
+		if (numVertex < countVertexes()) {
+			return vertexes.get(numVertex);
+		} else {
+			return null;
+		}
 	}
 
 	public void removeVertex(Vertex vertex) {
@@ -343,4 +347,17 @@ public class Graph {
 		return selectionEdges;
 	}
 
+	public List<Edge> getAdjacentEdges(Vertex vertex) {
+		List<Edge> adjacentEdges = new ArrayList<Edge>();
+		for (Edge edge : getEdges()) {
+			if (edge.getVertex1() == vertex) {
+				adjacentEdges.add(edge);
+			}
+		}
+		return adjacentEdges;
+	}
+
+	public boolean isSelectAllVertexes() {
+		return countVertexes() == getSelectionVertexes().size();
+	}
 }

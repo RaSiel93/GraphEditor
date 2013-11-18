@@ -3,8 +3,6 @@ package editorGraph.shell;
 import editorGraph.controller.Controller;
 import editorGraph.graph.Edge;
 import editorGraph.graph.Vertex;
-import editorGraph.listeners.eventListeners.MouseDrawClicked;
-import editorGraph.listeners.eventListeners.MouseDrawMotion;
 import editorGraph.listeners.eventListeners.MouseMotionTemporaryEdge;
 import editorGraph.listeners.eventListeners.MousePressingSelection;
 import editorGraph.listeners.eventListeners.MouseRegionalSelection;
@@ -26,6 +24,7 @@ import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.MouseListener;
 import java.awt.geom.Line2D;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -99,7 +98,6 @@ public class EditionPanel extends JPanel {
 	}
 
 	private void removeListeners() {
-		// removeMouseListener(vertexMouseListener);
 		removeMouseListener(edgeMouseListener);
 		removeMouseListener(editLabelMouseListener);
 	}
@@ -180,6 +178,7 @@ public class EditionPanel extends JPanel {
 
 	private Color selectionColor(Edge edge) {
 		Edge actualEdge = controller.getCurrentGraph().getActualEdge();
+		
 		if (edge == actualEdge) {
 			return Color.ORANGE;
 		} else if (edge.isSelected()) {
@@ -191,6 +190,7 @@ public class EditionPanel extends JPanel {
 
 	private Color selectionColor(Vertex vertex) {
 		Vertex actualVertex = controller.getCurrentGraph().getActualVertex();
+		
 		if (vertex == actualVertex) {
 			return Color.ORANGE;
 		} else if (vertex.isSelected()) {
