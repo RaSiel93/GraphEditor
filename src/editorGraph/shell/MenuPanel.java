@@ -7,13 +7,19 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Map;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JRadioButton;
 import javax.swing.KeyStroke;
 
+import editorGraph.algoritm.*;
+import editorGraph.controller.Controller;
+import editorGraph.listeners.SwitchAlgorithm;
+
 public class MenuPanel extends JMenuBar {
-	public MenuPanel(Map<String, ActionListener> listeners) {
+	public MenuPanel(Controller controller, Map<String, ActionListener> listeners) {
 		JMenu fileMenu = new JMenu("Файл");
 
 		JMenuItem newFile = new JMenuItem("Новый");
@@ -67,13 +73,12 @@ public class MenuPanel extends JMenuBar {
 
 		JMenuItem selectAll = new JMenuItem("Выделить все");
 		selectAll.addActionListener(listeners.get("SELECT_ALL"));
-		selectAll.setAccelerator(KeyStroke
-				.getKeyStroke('A', CTRL_DOWN_MASK));
-		
+		selectAll.setAccelerator(KeyStroke.getKeyStroke('A', CTRL_DOWN_MASK));
+
 		JMenuItem invertSelection = new JMenuItem("Инвентировать выделение");
 		invertSelection.addActionListener(listeners.get("SELECT_INVERT"));
-		invertSelection.setAccelerator(KeyStroke
-				.getKeyStroke('I', CTRL_DOWN_MASK));
+		invertSelection.setAccelerator(KeyStroke.getKeyStroke('I',
+				CTRL_DOWN_MASK));
 
 		editMenu.add(removeItem);
 		editMenu.add(selectAll);
@@ -84,12 +89,28 @@ public class MenuPanel extends JMenuBar {
 		JMenuItem algoRun = new JMenuItem("Запустить");
 		algoRun.addActionListener(listeners.get("ALGO_RUN"));
 		algoRun.setAccelerator(KeyStroke.getKeyStroke('R', CTRL_DOWN_MASK));
-		JMenuItem algoOptions = new JMenuItem("Опции..");
-		algoOptions.addActionListener(listeners.get("ALGO_OPTION"));
-		algoOptions.setAccelerator(KeyStroke.getKeyStroke('O', CTRL_DOWN_MASK));
+		
+		JMenu algoSwitch = new JMenu("Изменить алгоритм");
 
+		JRadioButton switchHamCycle = new JRadioButton("Гамильтонов цикл");
+		switchHamCycle.addActionListener(new SwitchAlgorithm(controller,
+				EnumAlgorithms.HamiltonianCycle));
+		switchHamCycle.setSelected(true);
+		
+		JRadioButton switchHamPath = new JRadioButton("Гамильтонов путь");
+		switchHamPath.addActionListener(new SwitchAlgorithm(controller,
+				EnumAlgorithms.HamiltonianPath));
+
+		ButtonGroup group = new ButtonGroup();
+		
+		group.add(switchHamCycle);
+		group.add(switchHamPath);
+		
+		algoSwitch.add(switchHamCycle);
+		algoSwitch.add(switchHamPath);
+		
 		algoMenu.add(algoRun);
-//		algoMenu.add(algoOptions);
+		algoMenu.add(algoSwitch);
 		add(algoMenu);
 	}
 }

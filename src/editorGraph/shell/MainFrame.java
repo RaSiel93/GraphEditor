@@ -46,7 +46,7 @@ public class MainFrame extends JFrame {
 		listeners = initListeners();
 
 		addWindowListener(new WindowEvents());
-		MenuPanel menuPanel = new MenuPanel(listeners);
+		MenuPanel menuPanel = new MenuPanel(controller, listeners);
 		ButtonPanel buttonPanel = new ButtonPanel(listeners);
 
 		this.tabbedPane = new JTabbedPane();

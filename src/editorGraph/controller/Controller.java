@@ -1,5 +1,9 @@
 package editorGraph.controller;
 
+import editorGraph.algoritm.Algorithm;
+import editorGraph.algoritm.EnumAlgorithms;
+import editorGraph.algoritm.HamiltonianCycle;
+import editorGraph.algoritm.HamiltonianPath;
 import editorGraph.graph.Edge;
 import editorGraph.graph.Graph;
 import editorGraph.graph.ListGraphs;
@@ -19,7 +23,7 @@ public class Controller {
 	private ListGraphs listGraphs;
 	private MainFrame mainFrame;
 
-	private Algoritm algoritm;
+	private Algorithm algoritm;
 
 	private Point pointSelectionBegin;
 	private Point pointSelectionEnd;
@@ -36,8 +40,8 @@ public class Controller {
 		listGraphs = new ListGraphs();
 		selectionVertexes = new ArrayList<Vertex>();
 		selectionEdges = new ArrayList<Edge>();
-		
-		algoritm = new Algoritm(this);
+
+		algoritm = new HamiltonianCycle(this);
 	}
 
 	public void startActions() {
@@ -263,7 +267,7 @@ public class Controller {
 				vertexes.add(edge.getVertex2());
 			}
 		}
-		
+
 		for (Vertex vertex : vertexes) {
 			vertex.shift(x, y);
 		}
@@ -343,27 +347,36 @@ public class Controller {
 	public void repaint() {
 		mainFrame.repaint();
 	}
-	
-	//ALGORITM
-	public void runAlgoritm(){
-		algoritm.run(getCurrentGraph());
+
+	// ALGORITM
+	public void switchAlgorithm(EnumAlgorithms algoritm) {
+		switch (algoritm) {
+		case HamiltonianCycle:
+			this.algoritm = new HamiltonianCycle(this);
+			break;
+		case HamiltonianPath:
+			this.algoritm = new HamiltonianPath(this);
+			break;
+		}
 	}
 
-	public Algoritm getAlgoritm() {
-		return algoritm;
+	public void runAlgorithm() {
+		if (getCurrentGraph() != null) {
+			algoritm.run();
+		}
 	}
 
 	public void invertSelection() {
 		Graph graph = getCurrentGraph();
-		for(Vertex vertex : graph.getVertexes()){
-			if(vertex.isSelected()){
+		for (Vertex vertex : graph.getVertexes()) {
+			if (vertex.isSelected()) {
 				vertex.selectOff();
 			} else {
 				vertex.selectOn();
 			}
 		}
-		for(Edge edge : graph.getEdges()){
-			if(edge.isSelected()){
+		for (Edge edge : graph.getEdges()) {
+			if (edge.isSelected()) {
 				edge.selectOff();
 			} else {
 				edge.selectOn();

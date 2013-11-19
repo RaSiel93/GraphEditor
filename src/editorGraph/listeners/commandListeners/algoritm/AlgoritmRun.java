@@ -14,7 +14,7 @@ public class AlgoritmRun implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		controller.runAlgoritm();
+		controller.runAlgorithm();
 		controller.repaint();
 	}
 }
