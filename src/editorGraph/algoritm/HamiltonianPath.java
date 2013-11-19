@@ -32,9 +32,9 @@ public class HamiltonianPath implements Algorithm {
 		
 		controller.repaint();
 		if(hamiltonianPath){
-			JOptionPane.showMessageDialog(null, "Ёйлеров путь найден");
+			JOptionPane.showMessageDialog(null, "√амильтонов путь найден");
 		} else {
-			JOptionPane.showMessageDialog(null, "Ёйлеров путь не найден");			
+			JOptionPane.showMessageDialog(null, "√амильтонов путь не найден");			
 		}
 	}
 
