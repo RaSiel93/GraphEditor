@@ -38,7 +38,7 @@ public class HamiltonianCycle implements Algorithm {
 			Vertex currentVertex) {
 		currentVertex.selectOn();
 		Edge commonEdge = graph.getCommonEdge(currentVertex, startingVertex);
-		if (graph.isSelectAllVertexes() && commonEdge != null) {
+		if (graph.isSelectAllVertex() && commonEdge != null) {
 			commonEdge.selectOn();
 			return true;
 		} else {

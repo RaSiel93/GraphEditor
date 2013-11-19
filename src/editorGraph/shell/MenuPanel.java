@@ -101,13 +101,25 @@ public class MenuPanel extends JMenuBar {
 		switchHamPath.addActionListener(new SwitchAlgorithm(controller,
 				EnumAlgorithms.HamiltonianPath));
 
+		JRadioButton switchEulCycle = new JRadioButton("Ёйлеров цикл");
+		switchEulCycle.addActionListener(new SwitchAlgorithm(controller,
+				EnumAlgorithms.EulerianCycle));
+		
+		JRadioButton switchEulPath = new JRadioButton("Ёйлеров путь");
+		switchEulPath.addActionListener(new SwitchAlgorithm(controller,
+				EnumAlgorithms.EulerianPath));
+
 		ButtonGroup group = new ButtonGroup();
 		
 		group.add(switchHamCycle);
 		group.add(switchHamPath);
+		group.add(switchEulCycle);
+		group.add(switchEulPath);
 		
 		algoSwitch.add(switchHamCycle);
 		algoSwitch.add(switchHamPath);
+		algoSwitch.add(switchEulCycle);
+		algoSwitch.add(switchEulPath);
 		
 		algoMenu.add(algoRun);
 		algoMenu.add(algoSwitch);

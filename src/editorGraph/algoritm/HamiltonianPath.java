@@ -12,41 +12,43 @@ import javax.swing.JOptionPane;
 public class HamiltonianPath implements Algorithm {
 	Graph graph;
 	Controller controller;
-	
+
 	public HamiltonianPath(Controller controller) {
 		this.controller = controller;
 	}
 
 	public void run() {
 		this.graph = controller.getCurrentGraph();
+
+		boolean hamiltonianPath = false;
 		
-		graph.deselectAll();
-
-		Vertex startingVertex = graph.getVertex(0);
-
-		if (startingVertex != null
-				&& findHamiltonianCycle(startingVertex, startingVertex)) {
-			controller.repaint();
-			JOptionPane.showMessageDialog(null, "√амильтонов путь найден");
+		for(Vertex vertex : graph.getVertexes()){
+			graph.deselectAll();
+			if(findHamiltonianPath(vertex)) {
+				hamiltonianPath = true;
+				break;
+			}
+		}
+		
+		controller.repaint();
+		if(hamiltonianPath){
+			JOptionPane.showMessageDialog(null, "Ёйлеров путь найден");
 		} else {
-			controller.repaint();
-			JOptionPane.showMessageDialog(null, "√амильтонов путь не найден");
+			JOptionPane.showMessageDialog(null, "Ёйлеров путь не найден");			
 		}
 	}
 
-	private boolean findHamiltonianCycle(Vertex startingVertex,
-			Vertex currentVertex) {
+	private boolean findHamiltonianPath(Vertex currentVertex) {
 		currentVertex.selectOn();
-		Edge commonEdge = graph.getCommonEdge(currentVertex, startingVertex);
-		if (graph.isSelectAllVertexes() && commonEdge != null) {
-			commonEdge.selectOn();
+		if (graph.isSelectAllVertex()) {
 			return true;
 		} else {
 			List<Edge> edges = graph.getAdjacentEdges(currentVertex);
 			for (Edge edge : edges) {
 				if (!edge.isSelected()) {
 					edge.selectOn();
-					if (!edge.getVertex2().isSelected() && findHamiltonianCycle(startingVertex, edge.getVertex2())) {
+					if (!edge.getVertex2().isSelected()
+							&& findHamiltonianPath(edge.getVertex2())) {
 						return true;
 					} else {
 						edge.selectOff();

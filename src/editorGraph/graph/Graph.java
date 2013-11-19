@@ -124,6 +124,10 @@ public class Graph {
 		return vertexes.size();
 	}
 
+	private int countEdges() {
+		return edges.size();
+	}
+	
 	public Vertex findVertex(Point p) {
 		for (Vertex vertex : vertexes) {
 			if (vertex.contains(p)) {
@@ -357,8 +361,12 @@ public class Graph {
 		return adjacentEdges;
 	}
 
-	public boolean isSelectAllVertexes() {
+	public boolean isSelectAllVertex() {
 		return countVertexes() == getSelectionVertexes().size();
+	}
+	
+	public boolean isSelectAllEdges() {
+		return countEdges() == getSelectionEdges().size();
 	}
 
 	public Edge getCommonEdge(Vertex vertex1, Vertex vertex2) {

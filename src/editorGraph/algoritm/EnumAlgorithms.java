@@ -2,6 +2,8 @@ package editorGraph.algoritm;
 
 
 public enum EnumAlgorithms {
+	HamiltonianPath,
 	HamiltonianCycle,
-	HamiltonianPath
+	EulerianPath,
+	EulerianCycle
 }

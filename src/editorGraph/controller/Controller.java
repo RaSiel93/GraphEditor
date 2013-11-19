@@ -2,6 +2,8 @@ package editorGraph.controller;
 
 import editorGraph.algoritm.Algorithm;
 import editorGraph.algoritm.EnumAlgorithms;
+import editorGraph.algoritm.EulerianCycle;
+import editorGraph.algoritm.EulerianPath;
 import editorGraph.algoritm.HamiltonianCycle;
 import editorGraph.algoritm.HamiltonianPath;
 import editorGraph.graph.Edge;
@@ -356,6 +358,12 @@ public class Controller {
 			break;
 		case HamiltonianPath:
 			this.algoritm = new HamiltonianPath(this);
+			break;
+		case EulerianCycle:
+			this.algoritm = new EulerianCycle(this);
+			break;
+		case EulerianPath:
+			this.algoritm = new EulerianPath(this);
 			break;
 		}
 	}

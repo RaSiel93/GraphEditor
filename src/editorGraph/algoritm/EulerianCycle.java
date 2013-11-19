@@ -12,14 +12,14 @@ import javax.swing.JOptionPane;
 public class EulerianCycle implements Algorithm {
 	Graph graph;
 	Controller controller;
-	
+
 	public EulerianCycle(Controller controller) {
 		this.controller = controller;
 	}
 
 	public void run() {
 		this.graph = controller.getCurrentGraph();
-		
+
 		graph.deselectAll();
 
 		Vertex startingVertex = graph.getVertex(0);
@@ -27,26 +27,23 @@ public class EulerianCycle implements Algorithm {
 		if (startingVertex != null
 				&& findHamiltonianCycle(startingVertex, startingVertex)) {
 			controller.repaint();
-			JOptionPane.showMessageDialog(null, "√амильтонов путь найден");
+			JOptionPane.showMessageDialog(null, "Ёйлеров цикл найден");
 		} else {
 			controller.repaint();
-			JOptionPane.showMessageDialog(null, "√амильтонов путь не найден");
+			JOptionPane.showMessageDialog(null, "Ёйлеров цикл не найден");
 		}
 	}
 
 	private boolean findHamiltonianCycle(Vertex startingVertex,
 			Vertex currentVertex) {
-		currentVertex.selectOn();
-		Edge commonEdge = graph.getCommonEdge(currentVertex, startingVertex);
-		if (graph.isSelectAllVertexes() && commonEdge != null) {
-			commonEdge.selectOn();
+		if (graph.isSelectAllEdges()) {
 			return true;
 		} else {
 			List<Edge> edges = graph.getAdjacentEdges(currentVertex);
 			for (Edge edge : edges) {
 				if (!edge.isSelected()) {
 					edge.selectOn();
-					if (!edge.getVertex2().isSelected() && findHamiltonianCycle(startingVertex, edge.getVertex2())) {
+					if (findHamiltonianCycle(startingVertex, edge.getVertex2())) {
 						return true;
 					} else {
 						edge.selectOff();
@@ -54,7 +51,6 @@ public class EulerianCycle implements Algorithm {
 				}
 			}
 		}
-		currentVertex.selectOff();
 		return false;
 	}
 
